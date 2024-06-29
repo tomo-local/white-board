@@ -11,10 +11,12 @@
     "check": "biome check -- apply src/"
   },
   "dependencies": {
+    "jotai": "^2.8.3",
     "next": "14.2.4",
     "react": "^18",
     "react-dom": "^18",
-    "reactflow": "^11.11.3"
+    "reactflow": "^11.11.3",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.1",
