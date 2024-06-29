@@ -1,58 +1,41 @@
-'use client';
+"use client";
 
-import { useCallback, useState } from 'react';
+import { useEffect } from "react";
 import ReactFlow, {
-  addEdge,
-  Node,
-  Edge,
-  applyNodeChanges,
-  applyEdgeChanges,
-  OnNodesChange,
-  OnEdgesChange,
-  OnConnect,
-} from 'reactflow';
+  useNodesState,
+  useEdgesState,
+} from "reactflow";
 
+import { pageAtom } from "@/jotai/storage/local";
+import { useAtom } from "jotai";
 
-import 'reactflow/dist/style.css';
+import "reactflow/dist/style.css";
 
-export default function App({
-  nodes: initNodes,
-  edges: initEdges,
-}: {
-  nodes: Node[];
-  edges: Edge[];
-}) {
-  const [nodes, setNodes] = useState<Node[]>(initNodes);
-  const [edges, setEdges] = useState<Edge[]>(initEdges);
-
-  const onNodesChange: OnNodesChange = useCallback(
-    (chs) => {
-      setNodes((nds) => applyNodeChanges(chs, nds));
-    },
-    [setNodes]
+export default function App({ id }: { id: string }) {
+  const [{ title, nodes: initNodes, edges: initEdges }, setPage] = useAtom(
+    pageAtom(id)
   );
 
-  const onEdgesChange: OnEdgesChange = useCallback(
-    (chs) => {
-      setEdges((eds) => applyEdgeChanges(chs, eds));
-    },
-    [setEdges]
-  );
+  const [nodes, setNodes, onNodesChange] = useNodesState(initNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initEdges);
 
-  const onConnect: OnConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    [setEdges]
-  );
+  useEffect(() => {
+    setPage({
+      id,
+      title,
+      nodes,
+      edges,
+    });
+  }, [id, title, nodes, edges, setPage]);
 
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
+    <div style={{ width: "100vw", height: "100vh" }}>
       <ReactFlow
         proOptions={{ hideAttribution: true }}
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
       />
     </div>
   );
