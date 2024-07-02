@@ -2,31 +2,18 @@ import { atom } from "jotai";
 import { atomFamily } from "jotai/utils";
 import type { Node, Edge } from "reactflow";
 import { pagesAtom, type Page } from "@/jotai/storage/local";
+import { v4 as uuid } from "uuid";
 
 const initialNodes: Node[] = [
   {
-    id: "1",
-    type: "input",
+    id: uuid(),
+    type: "normal",
     data: { label: "Node 1" },
-    position: { x: 250, y: 5 },
-  },
-  {
-    id: "2",
-    data: { label: "Node 2" },
     position: { x: 100, y: 100 },
   },
-  {
-    id: "3",
-    data: { label: "Node 3" },
-    position: { x: 400, y: 100 },
-  },
 ];
 
-const initialEdges: Edge[] = [
-  { id: "e1-2", source: "1", target: "2", animated: true },
-  { id: "e1-3", source: "1", target: "3", animated: true },
-];
-
+const initialEdges: Edge[] = [];
 export const pageAtom = atomFamily((id: string) =>
   atom(
     (get) => {
