@@ -1,32 +1,12 @@
 "use client";
+import ReactFlow from "reactflow";
 
-import { useEffect } from "react";
-import ReactFlow, {
-  useNodesState,
-  useEdgesState,
-} from "reactflow";
-
-import { pageAtom } from "@/jotai/storage/local";
-import { useAtom } from "jotai";
+import { useFlowStore } from "@/hooks/useFlowStore";
 
 import "reactflow/dist/style.css";
 
 export default function App({ id }: { id: string }) {
-  const [{ title, nodes: initNodes, edges: initEdges }, setPage] = useAtom(
-    pageAtom(id)
-  );
-
-  const [nodes, setNodes, onNodesChange] = useNodesState(initNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initEdges);
-
-  useEffect(() => {
-    setPage({
-      id,
-      title,
-      nodes,
-      edges,
-    });
-  }, [id, title, nodes, edges, setPage]);
+  const { nodes, edges, onNodesChange, onEdgesChange } = useFlowStore(id);
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
