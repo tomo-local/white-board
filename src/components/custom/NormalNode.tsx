@@ -1,4 +1,6 @@
+"use client";
 import type { ChangeEvent } from "react";
+
 import { Handle, Position, type NodeProps } from "reactflow";
 
 import { useNodeControl } from "@/hooks/useNodeControl";
@@ -8,24 +10,30 @@ export default function NormalNode(props: NodeProps<NodeData>) {
   const { data, onChange, onSave } = useNodeControl(props);
 
   const handleChangeLabel = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("handleChangeLabel", e.target.value);
-    onChange({ ...data, label: e.target.value });
+    onChange({ ...data, data: { label: e.target.value } });
   };
 
   return (
     <>
-      <div className="px-4 py-2 shadow-md rounded-md bg-white border-2 border-stone-400 text-black">
-        <div className="flex flex-col w-40 h-20 max-h-20 max-w-40  justify-center">
+      <div className="px-4 py-2 shadow-md rounded-md bg-white border-2 border-stone-500 text-black">
+        <div className="flex flex-col w-40 h-20 max-h-20 max-w-40 justify-center">
+          <div className="text-xs absolute top-2 left-3 flex justify-between text-stone-400">
+            Type: Markdown
+          </div>
+          <div className="text-xs absolute top-2 right-3 flex justify-between text-stone-400">
+            ⚫️
+          </div>
           <input
             type="text"
-            value={data.label}
+            value={data.data.label}
             onChange={handleChangeLabel}
-            onBlur={() => onSave()}
-            onKeyDown={(e) =>
-              e.key === "Enter" &&
-              (e.ctrlKey || e.metaKey) &&
-              onSave()
-            }
+            onBlur={onSave}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+                onSave();
+                e.currentTarget.blur();
+              }
+            }}
           />
         </div>
       </div>
