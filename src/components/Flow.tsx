@@ -1,17 +1,22 @@
 "use client";
-import ReactFlow from "reactflow";
+import ReactFlow, { MiniMap } from "reactflow";
 
 import { useFlowStore } from "@/hooks/useFlowStore";
-import NormalNode from "@/components/custom/NormalNode";
+import { useSidePanelControl } from "@/hooks/useSidePanelControl";
+import MarkdownNode from "@/components/custom/MarkdownNode";
+import SidePanel from "@/components/SidePanel";
 
 import "reactflow/dist/style.css";
 
 const nodeTypes = {
-  normal: NormalNode,
+  markdown: MarkdownNode,
 };
 
 export default function App({ id }: { id: string }) {
-  const { nodes, edges, onNodesChange, onEdgesChange } = useFlowStore(id);
+  const { nodes, edges, onNodesChange, onEdgesChange, addNodeMarkdown } =
+    useFlowStore(id);
+
+  const { onPanelClick } = useSidePanelControl();
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
@@ -22,7 +27,12 @@ export default function App({ id }: { id: string }) {
         edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
-      />
+        onPaneClick={(e) => onPanelClick(e, addNodeMarkdown)}
+        fitView
+      >
+        <MiniMap />
+        <SidePanel />
+      </ReactFlow>
     </div>
   );
 }

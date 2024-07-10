@@ -10,7 +10,7 @@ export type NodeData = {
 
 const defaultNodeData: Node<NodeData> = {
   id: uuid(),
-  type: "normal",
+  type: "markdown",
   position: { x: 100, y: 100 },
   data: { label: "node" },
 };

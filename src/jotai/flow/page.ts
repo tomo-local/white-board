@@ -7,7 +7,7 @@ import { v4 as uuid } from "uuid";
 const initialNodes: Node[] = [
   {
     id: uuid(),
-    type: "normal",
+    type: "markdown",
     data: { label: "Node 1" },
     position: { x: 100, y: 100 },
   },
