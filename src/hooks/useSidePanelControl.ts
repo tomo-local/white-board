@@ -15,13 +15,16 @@ export const useSidePanelControl = () => {
     reset: reset,
     onPanelClick: (
       e: MouseEvent<Element, globalThis.MouseEvent>,
-      action: (e: MouseEvent<Element, globalThis.MouseEvent>) => void
+      action: (
+        type: "markdown",
+        e: MouseEvent<Element, globalThis.MouseEvent>
+      ) => void
     ) => {
       if (!panel.selected) {
         return;
       }
 
-      action(e);
+      action("markdown", e);
 
       if (!e.ctrlKey && !e.metaKey) {
         setPanel({ selected: null });
