@@ -41,7 +41,12 @@ export const useFlowStore = (id: string) => {
     ),
     addNodeMarkdown: useAtomCallback(
       useCallback(
-        (get, set, event: MouseEvent<Element, globalThis.MouseEvent>) => {
+        (
+          get,
+          set,
+          type: "markdown",
+          event: MouseEvent<Element, globalThis.MouseEvent>
+        ) => {
           const nodes = get(nodesAtom(id));
           const { x, y } = screenToFlowPosition({
             x: event.clientX,
@@ -52,7 +57,7 @@ export const useFlowStore = (id: string) => {
             ...nodes,
             {
               id: uuid(),
-              type: "markdown",
+              type: type,
               position: {
                 x: x - 100,
                 y: y - 50,
