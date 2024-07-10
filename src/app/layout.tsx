@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <nav>
+        <nav className="absolute z-50 bg-slate-800 w-full">
           <a href="/reactflow">White Board</a>
         </nav>
         {children}

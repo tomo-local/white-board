@@ -2,8 +2,13 @@
 import ReactFlow from "reactflow";
 
 import { useFlowStore } from "@/hooks/useFlowStore";
+import NormalNode from "@/components/custom/NormalNode";
 
 import "reactflow/dist/style.css";
+
+const nodeTypes = {
+  normal: NormalNode,
+};
 
 export default function App({ id }: { id: string }) {
   const { nodes, edges, onNodesChange, onEdgesChange } = useFlowStore(id);
@@ -11,6 +16,7 @@ export default function App({ id }: { id: string }) {
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
       <ReactFlow
+        nodeTypes={nodeTypes}
         proOptions={{ hideAttribution: true }}
         nodes={nodes}
         edges={edges}
