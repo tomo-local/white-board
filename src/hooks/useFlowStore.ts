@@ -1,10 +1,12 @@
 import { useCallback, type MouseEvent } from "react";
 import {
+  addEdge,
   applyEdgeChanges,
   applyNodeChanges,
   useReactFlow,
   type EdgeChange,
   type NodeChange,
+  type Connection,
 } from "reactflow";
 import { useAtomValue } from "jotai";
 import { useAtomCallback } from "jotai/utils";
@@ -39,7 +41,7 @@ export const useFlowStore = (id: string) => {
         [id]
       )
     ),
-    addNodeMarkdown: useAtomCallback(
+    addNode: useAtomCallback(
       useCallback(
         (
           get,
@@ -67,6 +69,15 @@ export const useFlowStore = (id: string) => {
           ]);
         },
         [id, screenToFlowPosition]
+      )
+    ),
+    addEdge: useAtomCallback(
+      useCallback(
+        (get, set, connection: Connection) => {
+          const edges = get(edgesAtom(id));
+          set(edgesAtom(id), addEdge(connection, edges));
+        },
+        [id]
       )
     ),
   };

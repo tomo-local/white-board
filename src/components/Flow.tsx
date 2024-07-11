@@ -13,7 +13,7 @@ const nodeTypes = {
 };
 
 export default function App({ id }: { id: string }) {
-  const { nodes, edges, onNodesChange, onEdgesChange, addNodeMarkdown } =
+  const { nodes, edges, onNodesChange, onEdgesChange, addNode, addEdge } =
     useFlowStore(id);
 
   const { onPanelClick } = useSidePanelControl();
@@ -27,7 +27,8 @@ export default function App({ id }: { id: string }) {
         edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
-        onPaneClick={(e) => onPanelClick(e, addNodeMarkdown)}
+        onPaneClick={(e) => onPanelClick(e, addNode)}
+        onConnect={addEdge}
         fitView
       >
         <MiniMap />
