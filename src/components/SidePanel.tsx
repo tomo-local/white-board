@@ -6,7 +6,7 @@ type PanelProps = {
   position?: Position;
 };
 export default function SidePanel({ position = "left" }: PanelProps) {
-  const { selected, select } = useSidePanelControl();
+  const { select } = useSidePanelControl();
 
   return (
     <div className={`react-flow__panel ${position} bottom-1/3 top-1/3`}>
@@ -15,7 +15,7 @@ export default function SidePanel({ position = "left" }: PanelProps) {
           type="button"
           className="h-10 rounded-t-sm border border-slate-60 w-full relative group hover:bg-slate-400"
           onClick={() => {
-            select("add-normal-node");
+            select("markdown");
           }}
         >
           ＋
