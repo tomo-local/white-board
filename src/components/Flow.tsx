@@ -30,7 +30,6 @@ export default function Flow({ id }: { id: string }) {
         onEdgesChange={onEdgesChange}
         onPaneClick={onPanelClick}
         onConnect={addEdge}
-        fitView
       >
         <MiniMap />
         <SidePanel />
