@@ -69,7 +69,7 @@ export const useFlowStore = (id: string) => {
                 x: x - 100,
                 y: y - 50,
               },
-              data: { label: `Node ${nodes.length}` },
+              data: { label: `Node ${nodes.length}`, description: "Sample" },
             },
           ]);
         },
