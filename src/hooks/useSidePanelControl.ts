@@ -1,30 +1,29 @@
 import type { MouseEvent } from "react";
 import { useAtom } from "jotai";
 
-import { sidePanelAtom, type PanelButton } from "@/jotai/flow/panel";
+import { sidePanelAtom, type CustomNodeTypes } from "@/jotai/flow/panel";
 
-export const useSidePanelControl = () => {
+type AddNodeFunction = (
+  type: CustomNodeTypes,
+  e: MouseEvent<Element, globalThis.MouseEvent>
+) => void;
+
+export const useSidePanelControl = (addNode?: AddNodeFunction) => {
   const [panel, setPanel] = useAtom(sidePanelAtom);
 
-  const select = (selected: PanelButton) => setPanel({ selected });
+  const select = (selected: CustomNodeTypes) => setPanel({ selected });
   const reset = () => setPanel({ selected: null });
 
   return {
     selected: panel.selected,
     select: select,
     reset: reset,
-    onPanelClick: (
-      e: MouseEvent<Element, globalThis.MouseEvent>,
-      action: (
-        type: "markdown",
-        e: MouseEvent<Element, globalThis.MouseEvent>
-      ) => void
-    ) => {
-      if (!panel.selected) {
+    onPanelClick: (e: MouseEvent<Element, globalThis.MouseEvent>) => {
+      if (!panel.selected || !addNode) {
         return;
       }
 
-      action("markdown", e);
+      addNode(panel.selected, e);
 
       if (!e.ctrlKey && !e.metaKey) {
         setPanel({ selected: null });

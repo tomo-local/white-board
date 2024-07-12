@@ -8,7 +8,7 @@ const initialNodes: Node[] = [
   {
     id: uuid(),
     type: "markdown",
-    data: { label: "Node 1" },
+    data: { label: "Node 0" },
     position: { x: 100, y: 100 },
   },
 ];

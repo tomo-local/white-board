@@ -1,15 +1,18 @@
 import { useCallback, type MouseEvent } from "react";
 import {
+  addEdge,
   applyEdgeChanges,
   applyNodeChanges,
   useReactFlow,
   type EdgeChange,
   type NodeChange,
+  type Connection,
 } from "reactflow";
 import { useAtomValue } from "jotai";
 import { useAtomCallback } from "jotai/utils";
 
 import { nodesAtom, edgesAtom } from "@/jotai/flow/page";
+import type { CustomNodeTypes } from "@/jotai/flow/panel";
 import { v4 as uuid } from "uuid";
 
 export const useFlowStore = (id: string) => {
@@ -39,14 +42,18 @@ export const useFlowStore = (id: string) => {
         [id]
       )
     ),
-    addNodeMarkdown: useAtomCallback(
+    addNode: useAtomCallback(
       useCallback(
         (
           get,
           set,
-          type: "markdown",
+          type: CustomNodeTypes,
           event: MouseEvent<Element, globalThis.MouseEvent>
         ) => {
+          if (!type) {
+            return;
+          }
+
           const nodes = get(nodesAtom(id));
           const { x, y } = screenToFlowPosition({
             x: event.clientX,
@@ -67,6 +74,15 @@ export const useFlowStore = (id: string) => {
           ]);
         },
         [id, screenToFlowPosition]
+      )
+    ),
+    addEdge: useAtomCallback(
+      useCallback(
+        (get, set, connection: Connection) => {
+          const edges = get(edgesAtom(id));
+          set(edgesAtom(id), addEdge(connection, edges));
+        },
+        [id]
       )
     ),
   };
