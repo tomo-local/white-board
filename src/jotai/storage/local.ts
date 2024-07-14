@@ -15,6 +15,7 @@ export const initialNodes: Node[] = [
   {
     id: uuid(),
     type: "markdown",
+    dragHandle: ".custom-drag-handle",
     data: { label: "Node 0", description: "Sample" },
     position: { x: 100, y: 100 },
   },
