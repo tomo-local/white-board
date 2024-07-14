@@ -5,6 +5,10 @@ import { Position, type NodeProps } from "reactflow";
 import CustomHandle from "@/components/custom/CustomHandle";
 import { useNodeControl } from "@/hooks/useNodeControl";
 
+type NodeData = {
+  label: string;
+};
+
 export default function MarkdownNode(props: NodeProps<NodeData>) {
   const { data, onChange, onSave } = useNodeControl(props);
 
