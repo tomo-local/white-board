@@ -65,6 +65,7 @@ export const useFlowStore = (id: string) => {
             {
               id: uuid(),
               type: type,
+              dragHandle: ".custom-drag-handle",
               position: {
                 x: x - 100,
                 y: y - 50,
