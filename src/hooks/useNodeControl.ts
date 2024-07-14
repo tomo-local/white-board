@@ -3,8 +3,11 @@ import { useParams } from "next/navigation";
 
 import type { NodeProps } from "reactflow";
 import { useAtomCallback } from "jotai/utils";
-import type { NodeData } from "@/jotai/flow/node";
 import { nodesAtom } from "@/jotai/flow/page";
+
+type NodeData = {
+  label: string;
+};
 
 export const useNodeControl = (initNode: NodeProps<NodeData>) => {
   const { id }: { id: string } = useParams();
