@@ -13,9 +13,9 @@ const nodeTypes = {
   markdown: MarkdownNode,
 };
 
-export default function Flow({ id }: { id: string }) {
+export default function Flow() {
   const { nodes, edges, onNodesChange, onEdgesChange, addNode, addEdge } =
-    useFlowStore(id);
+    useFlowStore();
 
   const { onPanelClick } = useSidePanelControl(addNode);
 

@@ -1,9 +1,9 @@
 import { atom } from "jotai";
 
-export type CustomNodeTypes = "markdown" | "normal" | null;
+export type CustomNodeTypes = "markdown" | "normal";
 
 type SidePanelButton = {
-  selected: CustomNodeTypes;
+  selected: CustomNodeTypes | null;
 };
 
 export const sidePanelAtom = atom<SidePanelButton>({ selected: null });

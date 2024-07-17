@@ -10,7 +10,7 @@ export default function ReactFlowPage({ params }: { params: { id: string } }) {
     <main className={styles.main}>
       <div className="absolute">{params.id}</div>
       <ReactFlowProvider>
-        <Flow id={params.id} />
+        <Flow />
       </ReactFlowProvider>
     </main>
   );

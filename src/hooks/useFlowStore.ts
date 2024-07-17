@@ -1,9 +1,10 @@
-import { useCallback, type MouseEvent } from "react";
+import { useCallback } from "react";
+import { useParams } from "next/navigation";
+
 import {
   addEdge,
   applyEdgeChanges,
   applyNodeChanges,
-  useReactFlow,
   type EdgeChange,
   type NodeChange,
   type Connection,
@@ -15,8 +16,13 @@ import { nodesAtom, edgesAtom } from "@/jotai/flow/page";
 import type { CustomNodeTypes } from "@/jotai/flow/panel";
 import { v4 as uuid } from "uuid";
 
-export const useFlowStore = (id: string) => {
-  const { screenToFlowPosition } = useReactFlow();
+type Position = {
+  x: number;
+  y: number;
+};
+
+export const useFlowStore = () => {
+  const { id }: { id: string } = useParams();
 
   return {
     id,
@@ -48,40 +54,39 @@ export const useFlowStore = (id: string) => {
           get,
           set,
           type: CustomNodeTypes,
-          event: MouseEvent<Element, globalThis.MouseEvent>
+          position: Position,
+          optionId?: string
         ) => {
-          if (!type) {
-            return;
-          }
-
           const nodes = get(nodesAtom(id));
-          const { x, y } = screenToFlowPosition({
-            x: event.clientX,
-            y: event.clientY,
-          });
-
-          set(nodesAtom(id), [
-            ...nodes,
-            {
-              id: uuid(),
-              type: type,
-              dragHandle: ".custom-drag-handle",
-              position: {
-                x: x - 100,
-                y: y - 50,
-              },
-              data: { label: `Node ${nodes.length}`, description: "Sample" },
+          const { x, y } = position;
+          const newNode = {
+            id: optionId || uuid(),
+            type: type,
+            dragHandle: ".custom-drag-handle",
+            position: {
+              x: x,
+              y: y,
             },
-          ]);
+            data: { label: `Node ${nodes.length}`, description: "Sample" },
+          };
+
+          set(nodesAtom(id), [...nodes, newNode]);
+
+          return newNode;
         },
-        [id, screenToFlowPosition]
+        [id]
       )
     ),
     addEdge: useAtomCallback(
       useCallback(
         (get, set, connection: Connection) => {
           const edges = get(edgesAtom(id));
-          set(edgesAtom(id), addEdge(connection, edges));
+
+          const newEdges = addEdge(connection, edges);
+
+          set(edgesAtom(id), newEdges);
+
+          return newEdges;
         },
         [id]
       )
