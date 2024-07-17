@@ -10,23 +10,19 @@ type NodeData = {
 };
 
 export default function MarkdownNode(props: NodeProps<NodeData>) {
-  const { data, onChange, onSave } = useNodeControl(props);
+  const { node, onChange, onSave } = useNodeControl(props);
 
   const handleChangeLabel = (e: ChangeEvent<HTMLInputElement>) => {
-    onChange({ ...data, data: { label: e.target.value } });
+    onChange({ ...node, data: { label: e.target.value } });
   };
 
   return (
-    <CommonNode
-      type="markdown"
-      dragging={props.dragging}
-      selected={props.selected}
-    >
+    <CommonNode {...props} type="markdown">
       <div className="text-black">
         <div className="flex flex-col w-40 h-16 py-1 max-w-40 max-h-16">
           <input
             type="text"
-            value={data.data.label}
+            value={node.data.label}
             onChange={handleChangeLabel}
             onBlur={onSave}
             onKeyDown={(e) => {
