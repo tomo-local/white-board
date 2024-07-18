@@ -35,11 +35,37 @@ export const edgesAtom = atomFamily((id: string) =>
 
 export const selectedNodeIdAtom = atom<string | null>(null);
 export const selectedNodeAtom = atomFamily((id: string) =>
-  atom(
-    (get) => {
-      const selectedNode = get(pageAtom(id));
-      const selectedNodeId = get(selectedNodeIdAtom);
-      return selectedNode.nodes.find((node) => node.id === selectedNodeId);
-    },
-  )
+  atom((get) => {
+    const page = get(pageAtom(id));
+    const selectedNodeId = get(selectedNodeIdAtom);
+    return page.nodes.find((node) => node.id === selectedNodeId);
+  })
+);
+
+export const beforeAndAfterNodeAtom = atomFamily((id: string) =>
+  atom((get) => {
+    const page = get(pageAtom(id));
+    const selectedNodeId = get(selectedNodeIdAtom);
+
+    const result: {
+      before: Node | null;
+      after: Node | null;
+    } = { before: null, after: null };
+
+    if (!selectedNodeId) {
+      return result;
+    }
+
+    const index = page.nodes.findIndex((node) => node.id === selectedNodeId);
+
+    if (index > 0) {
+      result.before = page.nodes[index - 1];
+    }
+
+    if (page.nodes.length - 1 > index) {
+      result.after = page.nodes[index + 1];
+    }
+
+    return result;
+  })
 );
