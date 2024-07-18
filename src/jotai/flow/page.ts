@@ -32,3 +32,14 @@ export const edgesAtom = atomFamily((id: string) =>
     }
   )
 );
+
+export const selectedNodeIdAtom = atom<string | null>(null);
+export const selectedNodeAtom = atomFamily((id: string) =>
+  atom(
+    (get) => {
+      const selectedNode = get(pageAtom(id));
+      const selectedNodeId = get(selectedNodeIdAtom);
+      return selectedNode.nodes.find((node) => node.id === selectedNodeId);
+    },
+  )
+);
