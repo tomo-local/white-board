@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useParams } from "next/navigation";
 import type { Node } from "reactflow";
 
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue, useAtom } from "jotai";
 import { useAtomCallback } from "jotai/utils";
 
 import {
@@ -15,7 +15,7 @@ type NodeData = Pick<Node, "data">;
 
 export const useNodeEditorControl = () => {
   const { id }: { id: string } = useParams();
-  const selectNodeId = useSetAtom(selectedNodeIdAtom);
+  const [selectedNodeId, selectNodeId] = useAtom(selectedNodeIdAtom);
   const node = useAtomValue(selectedNodeAtom(id));
 
   const [realTimeNode, setRealTimeNode] = useState(node?.data);
@@ -27,6 +27,7 @@ export const useNodeEditorControl = () => {
   return {
     node,
     nodeData: realTimeNode,
+    selectedNodeId,
     selectNodeId,
     resetNodeId: () => {
       selectNodeId(null);

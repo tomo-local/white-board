@@ -18,7 +18,7 @@ type CommonNodeProps = {
 export default function Node(props: CommonNodeProps) {
   const { id, type, selected, dragging, children } = props;
   const { addNodeWithEdge } = useNodeControl(props);
-  const { selectNodeId } = useNodeEditorControl();
+  const { selectNodeId, selectedNodeId } = useNodeEditorControl();
 
   return (
     <div
@@ -26,13 +26,21 @@ export default function Node(props: CommonNodeProps) {
       className={clsx(
         selected && "border-[3px]",
         "hover:border-[3px]",
-        "border-2 rounded-md border-stone-500 shadow-lg bg-white",
+        "relative border-2 rounded-md border-stone-500 shadow-lg bg-white",
         dragging
           ? "animate-grip shadow-2xl shadow-stone-950 cursor-grabbing"
           : "cursor-pointer",
+        selectedNodeId === id && "border-[3px]",
         props.className
       )}
     >
+      {selectedNodeId === id && (
+        <div className="flex absolute -right-4 -top-3 h-6 w-6">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-500 opacity-75" />
+          <span className="relative inline-flex rounded-full h-5 w-5 bg-slate-500" />
+        </div>
+      )}
+
       <div
         id={`node-type-${id}-header`}
         className={"flex bg-white rounded-t-md"}
