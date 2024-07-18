@@ -67,7 +67,12 @@ export const useFlowStore = () => {
               x: x,
               y: y,
             },
-            data: { label: `Node ${nodes.length}`, description: "Sample" },
+            data: {
+              label: `Node ${nodes.length}`,
+              context: "Sample",
+              created_at: new Date().toISOString(),
+              update_at: new Date().toISOString(),
+            },
           };
 
           set(nodesAtom(id), [...nodes, newNode]);

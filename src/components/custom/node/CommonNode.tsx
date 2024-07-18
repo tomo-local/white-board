@@ -7,6 +7,7 @@ import CustomHandle from "@/components/custom/node/options/Handle";
 import AddNodeToolbar from "@/components/custom/node/options/AddNodeToolbar";
 import { useNodeControl } from "@/hooks/useNodeControl";
 import type { CustomNodeTypes } from "@/jotai/flow/panel";
+import { useNodeEditorControl } from "@/hooks/useNodeEditorControl";
 
 type CommonNodeProps = {
   type: CustomNodeTypes;
@@ -17,6 +18,7 @@ type CommonNodeProps = {
 export default function Node(props: CommonNodeProps) {
   const { id, type, selected, dragging, children } = props;
   const { addNodeWithEdge } = useNodeControl(props);
+  const { selectNodeId } = useNodeEditorControl();
 
   return (
     <div
@@ -48,6 +50,9 @@ export default function Node(props: CommonNodeProps) {
           <button
             type="button"
             className="hover:bg-slate-100 rounded-md p-1 m-1"
+            onClick={() => {
+              selectNodeId(id);
+            }}
           >
             <PencilSquareIcon className="w-4 h-4" />
           </button>
