@@ -13,7 +13,7 @@ export default function MarkdownNode(props: NodeProps<NodeData>) {
   const { node, onChange, onSave } = useNodeControl(props);
 
   const handleChangeLabel = (e: ChangeEvent<HTMLInputElement>) => {
-    onChange({ ...node, data: { label: e.target.value } });
+    onChange({ ...node, data: { ...node.data, label: e.target.value } });
   };
 
   return (
