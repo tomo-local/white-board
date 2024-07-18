@@ -16,7 +16,12 @@ export const initialNodes: Node[] = [
     id: uuid(),
     type: "markdown",
     dragHandle: ".custom-drag-handle",
-    data: { label: "Node 0", description: "Sample" },
+    data: {
+      label: "Node 0",
+      context: "Sample",
+      created_at: new Date().toISOString(),
+      update_at: new Date().toISOString(),
+    },
     position: { x: 100, y: 100 },
   },
 ];
