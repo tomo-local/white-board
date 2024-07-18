@@ -8,6 +8,7 @@ import { useAtomCallback } from "jotai/utils";
 import {
   selectedNodeAtom,
   selectedNodeIdAtom,
+  beforeAndAfterNodeAtom,
   nodesAtom,
 } from "@/jotai/flow/page";
 
@@ -17,6 +18,7 @@ export const useNodeEditorControl = () => {
   const { id }: { id: string } = useParams();
   const [selectedNodeId, selectNodeId] = useAtom(selectedNodeIdAtom);
   const node = useAtomValue(selectedNodeAtom(id));
+  const { before, after } = useAtomValue(beforeAndAfterNodeAtom(id));
 
   const [realTimeNode, setRealTimeNode] = useState(node?.data);
 
@@ -29,12 +31,28 @@ export const useNodeEditorControl = () => {
     nodeData: realTimeNode,
     selectedNodeId,
     selectNodeId,
+    before,
+    after,
     resetNodeId: () => {
       selectNodeId(null);
     },
     onChange: (newData: NodeData) => {
       setRealTimeNode(newData);
     },
+    onDelete: useAtomCallback(
+      useCallback(
+        (get, set) => {
+          if (!node) {
+            return;
+          }
+
+          const nodes = get(nodesAtom(id));
+          const newNodes = nodes.filter((n) => n.id !== node.id);
+          set(nodesAtom(id), newNodes);
+        },
+        [node, id]
+      )
+    ),
     onSave: useAtomCallback(
       useCallback(
         (get, set) => {

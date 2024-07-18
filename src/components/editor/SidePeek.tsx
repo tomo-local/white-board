@@ -1,14 +1,28 @@
 import type { ChangeEvent } from "react";
+import clsx from "clsx";
 import {
   ChevronDoubleRightIcon,
   ChevronDownIcon,
   ChevronUpIcon,
+  EllipsisHorizontalIcon,
+  EllipsisVerticalIcon,
+  TrashIcon,
 } from "@heroicons/react/24/outline";
+
 import { useNodeEditorControl } from "@/hooks/useNodeEditorControl";
 
 export default function SidePeek() {
-  const { node, nodeData, resetNodeId, onChange, onSave } =
-    useNodeEditorControl();
+  const {
+    node,
+    before,
+    after,
+    nodeData,
+    resetNodeId,
+    onChange,
+    onDelete,
+    onSave,
+    selectNodeId,
+  } = useNodeEditorControl();
 
   const handleChangeLabel = (e: ChangeEvent<HTMLInputElement>) => {
     onChange({ ...nodeData, label: e.target.value });
@@ -18,25 +32,57 @@ export default function SidePeek() {
     onChange({ ...nodeData, context: e.target.value });
   };
 
-  const style = {};
-
   return (
     node && (
       <div className="h-screen bg-stone-200 z-40 w-1/2 min-w-96 text-stone-600 flex flex-col border-l border-stone-300 transition-all">
-        <div className="flex flex-none p-2 mx-2 space-x-1">
-          <button
-            type="button"
-            className="hover:bg-stone-300 rounded-md p-1"
-            onClick={resetNodeId}
-          >
-            <ChevronDoubleRightIcon className="w-4 h-4" />
-          </button>
-          <button className="hover:bg-stone-300 rounded-md p-1" type="button">
-            <ChevronUpIcon className="w-4 h-4" />
-          </button>
-          <button className="hover:bg-stone-300 rounded-md p-1" type="button">
-            <ChevronDownIcon className="w-4 h-4" />
-          </button>
+        <div className="flex flex-none p-2 w-full justify-between ">
+          <div className="flex h-full space-x-1">
+            <button
+              type="button"
+              className="hover:bg-stone-300 rounded-md p-1"
+              onClick={resetNodeId}
+            >
+              <ChevronDoubleRightIcon className="w-4 h-4" />
+            </button>
+            <div className="border-l border-stone-400 my-1.5" />
+            <button
+              type="button"
+              className={clsx(
+                "hover:bg-stone-300 rounded-md p-1",
+                "disabled:opacity-50 disabled:cursor-not-allowed"
+              )}
+              disabled={!before}
+              onClick={() => before && selectNodeId(before?.id)}
+            >
+              <ChevronUpIcon className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              className={clsx(
+                "hover:bg-stone-300 rounded-md p-1",
+                "disabled:opacity-50 disabled:cursor-not-allowed"
+              )}
+              disabled={!after}
+              onClick={() => after && selectNodeId(after?.id)}
+            >
+              <ChevronDownIcon className="w-4 h-4" />
+            </button>
+          </div>
+          <div className="flex h-full space-x-1">
+            <button
+              type="button"
+              className="hover:bg-stone-300 rounded-md p-1"
+              onClick={() => {
+                onDelete();
+                resetNodeId();
+              }}
+            >
+              <TrashIcon className="w-4 h-4" />
+            </button>
+            <button type="button" className="hover:bg-stone-300 rounded-md p-1">
+              <EllipsisHorizontalIcon className="w-4 h-4" />
+            </button>
+          </div>
         </div>
 
         <div className="grow flex flex-col px-4 py-1">
