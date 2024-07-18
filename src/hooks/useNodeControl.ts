@@ -90,7 +90,10 @@ export const useNodeControl = (initNode: NodeProps<NodeData>) => {
           const newNodes = [...nodes];
           newNodes[index] = {
             ...newNodes[index],
-            data: node.data,
+            data: {
+              ...node.data,
+              update_at: new Date().toISOString(),
+            },
           };
           set(nodesAtom(id), newNodes);
         },
