@@ -1,0 +1,19 @@
+.react-flow .react-flow__handle {
+  width: 14px;
+  height: 14px;
+  border-radius: 30%;
+}
+
+.react-flow .react-flow__handle-top {
+  top: -8px;
+}
+.react-flow .react-flow__handle-right {
+  right: -8px;
+}
+
+.react-flow .react-flow__handle-bottom {
+  bottom: -8px;
+}
+.react-flow .react-flow__handle-left {
+  left: -8px;
+}

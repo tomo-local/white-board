@@ -1,44 +1,34 @@
 "use client";
-import { type Edge, type Node, ReactFlowProvider } from "reactflow";
 
+import ReactFlow, {
+  ReactFlowProvider,
+  useNodesState,
+  useEdgesState,
+} from "reactflow";
+
+import { useAtomValue } from "jotai";
 import styles from "@/app/reactflow/page.module.css";
-import Flow from "@/components/Flow";
+import { defaultNodes, defaultEdges } from "@/jotai/storage/session";
 
-const initialNodes: Node[] = [
-  {
-    id: "1",
-    type: "input",
-    data: { label: "Node 1" },
-    position: { x: 250, y: 5 },
-  },
-  {
-    id: "2",
-    data: { label: "Node 2" },
-    position: { x: 100, y: 100 },
-  },
-  {
-    id: "3",
-    data: { label: "Node 3" },
-    position: { x: 400, y: 100 },
-  },
-];
+export default function ReactFlowPage() {
+  const initNodes = useAtomValue(defaultNodes);
+  const initEdges = useAtomValue(defaultEdges);
 
-const initialEdges: Edge[] = [
-  { id: "e1-2", source: "1", target: "2", animated: true },
-  { id: "e1-3", source: "1", target: "3", animated: true },
-];
-
-function fetchData() {
-  return { nodes: initialNodes, edges: initialEdges };
-}
-
-export default function ReactFlow() {
-  const { nodes, edges } = fetchData();
+  const [nodes, setNodes, onNodesChange] = useNodesState(initNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initEdges);
 
   return (
     <main className={styles.main}>
       <ReactFlowProvider>
-        <Flow nodes={nodes} edges={edges} />
+        <div style={{ width: "100vw", height: "100vh" }}>
+          <ReactFlow
+            proOptions={{ hideAttribution: true }}
+            nodes={nodes}
+            edges={edges}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+          />
+        </div>
       </ReactFlowProvider>
     </main>
   );

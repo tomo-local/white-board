@@ -1,59 +1,39 @@
-'use client';
+"use client";
+import ReactFlow, { MiniMap } from "reactflow";
 
-import { useCallback, useState } from 'react';
-import ReactFlow, {
-  addEdge,
-  Node,
-  Edge,
-  applyNodeChanges,
-  applyEdgeChanges,
-  OnNodesChange,
-  OnEdgesChange,
-  OnConnect,
-} from 'reactflow';
+import { useFlowStore } from "@/hooks/useFlowStore";
+import { useSidePanelControl } from "@/hooks/useSidePanelControl";
 
+import MarkdownNode from "@/components/custom/node/Markdown";
+import SidePanel from "@/components/SidePanel";
 
-import 'reactflow/dist/style.css';
+import "reactflow/dist/style.css";
 
-export default function App({
-  nodes: initNodes,
-  edges: initEdges,
-}: {
-  nodes: Node[];
-  edges: Edge[];
-}) {
-  const [nodes, setNodes] = useState<Node[]>(initNodes);
-  const [edges, setEdges] = useState<Edge[]>(initEdges);
+const nodeTypes = {
+  markdown: MarkdownNode,
+};
 
-  const onNodesChange: OnNodesChange = useCallback(
-    (chs) => {
-      setNodes((nds) => applyNodeChanges(chs, nds));
-    },
-    [setNodes]
-  );
+export default function Flow() {
+  const { nodes, edges, onNodesChange, onEdgesChange, addNode, addEdge } =
+    useFlowStore();
 
-  const onEdgesChange: OnEdgesChange = useCallback(
-    (chs) => {
-      setEdges((eds) => applyEdgeChanges(chs, eds));
-    },
-    [setEdges]
-  );
-
-  const onConnect: OnConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    [setEdges]
-  );
+  const { onPanelClick } = useSidePanelControl(addNode);
 
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
+    <div style={{ width: "100vw", height: "100vh" }}>
       <ReactFlow
+        nodeTypes={nodeTypes}
         proOptions={{ hideAttribution: true }}
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-      />
+        onPaneClick={onPanelClick}
+        onConnect={addEdge}
+      >
+        <MiniMap />
+        <SidePanel />
+      </ReactFlow>
     </div>
   );
 }
