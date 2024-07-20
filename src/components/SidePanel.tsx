@@ -1,4 +1,6 @@
 import { useSidePanelControl } from "@/hooks/useSidePanelControl";
+import { PlusIcon } from "@heroicons/react/24/outline";
+import clsx from "clsx";
 
 type Position = "left" | "right";
 
@@ -6,20 +8,31 @@ type PanelProps = {
   position?: Position;
 };
 export default function SidePanel({ position = "left" }: PanelProps) {
-  const { select } = useSidePanelControl();
+  const { select, selected, reset } = useSidePanelControl();
 
   return (
-    <div className={`react-flow__panel ${position} bottom-1/3 top-1/3`}>
-      <div className="flex flex-col bg-slate-500 rounded-sm w-10">
+    <div className={`react-flow__panel ${position} top-1/3`}>
+      <div className="flex flex-col bg-slate-500 rounded-sm w-10 ">
         <button
           type="button"
-          className="h-10 rounded-t-sm border border-slate-60 w-full relative group hover:bg-slate-400"
+          className={clsx(
+            "h-10 w-10 flex justify-center items-center",
+            "border border-stone-300",
+            "hover:bg-slate-400 hover:border-stone-400 group",
+            selected === "markdown" && "bg-slate-400 border-stone-400"
+          )}
           onClick={() => {
-            select("markdown");
+            selected === "markdown" ? reset() : select("markdown");
           }}
         >
-          ＋
-          <span className="border text-xs w-auto invisible rounded text-white bg-slate-500 py-1 px-2 top-2 left-12 group-hover:visible opacity-100 absolute">
+          <PlusIcon className="h-6 w-6" />
+          <span
+            className={clsx(
+              "absolute top-2 left-12 py-1 px-2 w-auto",
+              "border text-xs invisible rounded text-white bg-slate-500 opacity-100",
+              "group-hover:visible"
+            )}
+          >
             Markdown
           </span>
         </button>

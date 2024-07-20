@@ -13,7 +13,8 @@ export default function NodeListItem(props: Props) {
   return (
     <div
       className={clsx(
-        "border rounded-md border-slate-600 ml-1 mr-3 hover:border-2 bg-stone-200",
+        "border rounded-md border-slate-600 ml-1 mr-3 bg-stone-200",
+        "hover:border-2",
         selectedNodeId === props.id && "bg-stone-300"
       )}
     >

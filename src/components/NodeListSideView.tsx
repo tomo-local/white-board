@@ -40,7 +40,7 @@ export default function NodeListSideView() {
       )}
       <button
         type="button"
-        className="hover:bg-slate-400 bg-slate-500"
+        className="hover:bg-slate-400 bg-slate-500 "
         onClick={() => setOpen(!open)}
       >
         <ChevronDoubleRightIcon
