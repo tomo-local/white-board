@@ -11,7 +11,9 @@
     "check": "biome check -- apply src/"
   },
   "dependencies": {
+    "@lexical/react": "^0.16.1",
     "jotai": "^2.8.3",
+    "lexical": "^0.16.1",
     "next": "14.2.4",
     "react": "^18",
     "react-dom": "^18",
