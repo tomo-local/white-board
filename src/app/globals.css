@@ -31,3 +31,7 @@ body {
     text-wrap: balance;
   }
 }
+
+.react-flow.custom-cursor-pointer .react-flow__pane {
+  cursor: pointer; /* add !important if necessary */
+}
