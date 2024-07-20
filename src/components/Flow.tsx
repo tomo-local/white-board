@@ -17,11 +17,12 @@ export default function Flow() {
   const { nodes, edges, onNodesChange, onEdgesChange, addNode, addEdge } =
     useFlowStore();
 
-  const { onPanelClick } = useSidePanelControl(addNode);
+  const { onPanelClick, selected } = useSidePanelControl(addNode);
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
       <ReactFlow
+        className={selected ? "custom-cursor-pointer" : ""}
         nodeTypes={nodeTypes}
         proOptions={{ hideAttribution: true }}
         nodes={nodes}

@@ -5,7 +5,6 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   EllipsisHorizontalIcon,
-  EllipsisVerticalIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
 
