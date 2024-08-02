@@ -5,6 +5,8 @@ import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 
+import TreeViewPlugin from "@/components/common/editor/plugins/TreeViewPlugin";
+
 const theme = {};
 
 function onError(error: Error) {
@@ -29,6 +31,7 @@ export default function RichEditor() {
       />
       <HistoryPlugin />
       <AutoFocusPlugin />
+      <TreeViewPlugin />
     </LexicalComposer>
   );
 }
