@@ -35,3 +35,7 @@ body {
 .react-flow.custom-cursor-pointer .react-flow__pane {
   cursor: pointer; /* add !important if necessary */
 }
+
+.underline.line-through {
+  text-decoration: underline line-through;
+}
