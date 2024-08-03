@@ -11,13 +11,10 @@ export default function TreeViewPlugin() {
   const [editor] = useLexicalComposerContext();
   return (
     <TreeView
-      viewClassName="bg-slate-600 text-slate-100 rounded-md text-xs p-2 w-full min-h-52 relative"
+      viewClassName="bg-slate-600 text-slate-100 rounded-md text-xs p-2 w-full relative overflow-scroll max-h-[48%] min-h-[48%]"
       treeTypeButtonClassName={clsx(commonButtonClassName, "right-1 absolute")}
       timeTravelPanelClassName="bg-slate-600 flex items-center justify-center"
-      timeTravelButtonClassName={clsx(
-        commonButtonClassName,
-        "right-1 bottom-1 absolute"
-      )}
+      timeTravelButtonClassName={clsx(commonButtonClassName)}
       timeTravelPanelSliderClassName={clsx(timeTravelPanelSliderClassName)}
       timeTravelPanelButtonClassName={clsx(commonButtonClassName)}
       editor={editor}
