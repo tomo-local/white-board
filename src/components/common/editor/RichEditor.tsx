@@ -9,12 +9,19 @@ import TreeViewPlugin from "@/components/common/editor/plugins/TreeViewPlugin";
 import ToolbarPlugin from "@/components/common/editor/plugins/ToolBarPlugin";
 
 import theme from "@/components/common/editor/theme";
+import clsx from "clsx";
 
 function onError(error: Error) {
   console.error(error);
 }
 
-export default function RichEditor() {
+export default function RichEditor({
+  isDev,
+  className,
+}: {
+  isDev?: boolean;
+  className?: string;
+}) {
   const initialConfig = {
     namespace: "MyEditor",
     theme,
@@ -23,9 +30,14 @@ export default function RichEditor() {
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
-      <div className="h-[70vh]">
+      <div className={className}>
         <ToolbarPlugin />
-        <div className="max-h-[45%] min-h-[45%] overflow-scroll pt-1">
+        <div
+          className={clsx(
+            "min-h-[45%] overflow-scroll pt-1",
+            isDev ? "max-h-[45%]" : "max-h-[90%]"
+          )}
+        >
           <RichTextPlugin
             contentEditable={
               <ContentEditable className="focus:outline-none focus:shadow-outline" />
@@ -36,7 +48,7 @@ export default function RichEditor() {
         </div>
         <HistoryPlugin />
         <AutoFocusPlugin />
-        <TreeViewPlugin />
+        {isDev && <TreeViewPlugin />}
       </div>
     </LexicalComposer>
   );

@@ -9,7 +9,7 @@ export default function LexicalPage() {
         <h1 className="text-4xl font-bold">Lexical</h1>
         <p className="text-lg">This is the Lexical page.</p>
         <div className="mt-5 min-w-[50%] p-2 rounded-md bg-stone-100 text-stone-950">
-          <RichEditor />
+          <RichEditor isDev className="h-[70vh]" />
         </div>
       </div>
     </main>
