@@ -11,6 +11,12 @@ export type Page = {
   edges: Edge[];
 };
 
+export type Lexical = {
+  value: object | string;
+  created_at?: string;
+  update_at?: string;
+};
+
 export const initialNodes: Node[] = [
   {
     id: uuid(),
@@ -44,6 +50,41 @@ export const pageLocalAtom = (id: string) =>
       nodes: initialNodes,
       edges: initialEdges,
     } as Page,
+    undefined,
+    {
+      getOnInit: true,
+    }
+  );
+
+export const initialLexical = {
+  root: {
+    children: [
+      {
+        children: [],
+        direction: null,
+        format: "",
+        indent: 0,
+        type: "paragraph",
+        version: 1,
+      },
+    ],
+    direction: null,
+    format: "",
+    indent: 0,
+    type: "root",
+    version: 1,
+  },
+};
+
+export const lexicalLocalAtom = (id: string) =>
+  atomWithStorage(
+    `wb-lexical-${id}`,
+    {
+      // value: JSON.stringify(initialLexical),
+      value: "",
+      created_at: new Date().toISOString(),
+      update_at: new Date().toISOString(),
+    } as Lexical,
     undefined,
     {
       getOnInit: true,
