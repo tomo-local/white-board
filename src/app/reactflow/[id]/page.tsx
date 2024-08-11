@@ -7,7 +7,7 @@ import Flow from "@/components/Flow";
 import SidePeek from "@/components/editor/SidePeek";
 import NodeListSideView from "@/components/NodeListSideView";
 
-export default function ReactFlowPage({ params }: { params: { id: string } }) {
+export default function ReactFlowPage() {
   return (
     <main className={styles.main}>
       <ReactFlowProvider>
