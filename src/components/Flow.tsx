@@ -20,7 +20,7 @@ export default function Flow() {
   const { onPanelClick, selected } = useSidePanelControl(addNode);
 
   return (
-    <div style={{ width: "100vw", height: "100vh" }}>
+    <div className="w-full h-full bg-neutral-200 dark:bg-neutral-800">
       <ReactFlow
         className={selected ? "custom-cursor-pointer" : ""}
         nodeTypes={nodeTypes}
@@ -32,7 +32,7 @@ export default function Flow() {
         onPaneClick={onPanelClick}
         onConnect={addEdge}
       >
-        <MiniMap />
+        <MiniMap className="bg-neutral-200 dark:bg-neutral-800" />
         <SidePanel />
       </ReactFlow>
     </div>

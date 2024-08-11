@@ -16,11 +16,11 @@ export default function NodeListSideView() {
       {open && (
         <div
           className={clsx(
-            "bg-stone-200 text-stone-600 flex flex-col border-l border-stone-300 h-screen"
+            "bg-stone-200 text-stone-600 flex flex-col border-l border-stone-300 h-full"
           )}
         >
-          <div className="w-52 flex flex-col h-svh">
-            <h3 className="text-lg font-semibold flex-1 mt-5 border-b border-slate-600">
+          <div className="w-52 flex flex-col">
+            <h3 className="text-lg font-semibold flex-1 border-b border-slate-600">
               <div> Node Count : {nodes.length}</div>
             </h3>
             <div className="relative py-2 w-full h-full overflow-y-scroll scroll-smooth">
