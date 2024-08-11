@@ -16,11 +16,13 @@ export default function NodeListSideView() {
       {open && (
         <div
           className={clsx(
-            "bg-stone-200 text-stone-600 flex flex-col border-l border-stone-300 h-full"
+            "text-neutral-600 dark:text-neutral-200 flex flex-col border-l border-neutral-300 h-full",
+            "bg-neutral-100 dark:bg-neutral-800",
+            "dark:border-neutral-500"
           )}
         >
           <div className="w-52 flex flex-col">
-            <h3 className="text-lg font-semibold flex-1 border-b border-slate-600">
+            <h3 className="text-lg font-semibold flex-1 border-b border-neutral-600 px-2">
               <div> Node Count : {nodes.length}</div>
             </h3>
             <div className="relative py-2 w-full h-full overflow-y-scroll scroll-smooth">
@@ -40,7 +42,7 @@ export default function NodeListSideView() {
       )}
       <button
         type="button"
-        className="hover:bg-slate-400 bg-slate-500 "
+        className="dark:hover:bg-neutral-500 dark:bg-neutral-600 bg-neutral-400 hover:bg-neutral-300"
         onClick={() => setOpen(!open)}
       >
         <ChevronDoubleRightIcon
