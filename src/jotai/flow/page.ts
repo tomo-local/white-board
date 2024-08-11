@@ -34,6 +34,7 @@ export const edgesAtom = atomFamily((id: string) =>
 );
 
 export const selectedNodeIdAtom = atom<string | null>(null);
+
 export const selectedNodeAtom = atomFamily((id: string) =>
   atom((get) => {
     const page = get(pageAtom(id));
