@@ -10,10 +10,7 @@ export default function IconButton(props: IconButtonProps) {
   return (
     <button
       {...props}
-      className={clsx(
-        "p-1 rounded-md group/button relative",
-        className
-      )}
+      className={clsx("p-1 rounded-md group/button relative", className)}
     >
       {chip && (
         <div
@@ -24,7 +21,7 @@ export default function IconButton(props: IconButtonProps) {
         >
           <div
             className={clsx(
-              "text-xs whitespace-nowrap",
+              "text-xs whitespace-nowrap dark:text-neutral-100 text-neutral-600",
               "dark:bg-neutral-600 rounded-md p-1 opacity-90 border border-neutral-400 dark:border-neutral-700"
             )}
           >
