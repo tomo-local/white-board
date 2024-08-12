@@ -29,8 +29,8 @@ export const useNodeEditorControl = () => {
   return {
     node,
     nodeData: realTimeNode,
-    selectedNodeId,
-    selectNodeId,
+    selectId: selectedNodeId,
+    select: selectNodeId,
     before,
     after,
     resetNodeId: () => {
