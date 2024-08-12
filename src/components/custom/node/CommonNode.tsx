@@ -1,79 +1,58 @@
 "use client";
 import { Position, type NodeProps } from "reactflow";
-import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { clsx } from "clsx";
 
 import CustomHandle from "@/components/custom/node/options/Handle";
 import AddNodeToolbar from "@/components/custom/node/options/AddNodeToolbar";
+import PointBadge from "@/components/common/badge/PointBadge";
+
 import { useNodeControl } from "@/hooks/useNodeControl";
 import type { CustomNodeTypes } from "@/jotai/flow/panel";
-import { useNodeEditorControl } from "@/hooks/useNodeEditorControl";
 
 type CommonNodeProps = {
   type: CustomNodeTypes;
+  editing?: boolean;
   className?: string;
   isConnectable?: boolean;
   children: React.ReactNode;
+  onDoubleClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 } & NodeProps;
 
 export default function Node(props: CommonNodeProps) {
-  const { id, type, selected, dragging, children, isConnectable } = props;
+  const {
+    id,
+    type,
+    selected,
+    dragging,
+    children,
+    isConnectable,
+    className,
+    editing,
+    onDoubleClick,
+  } = props;
   const { addNodeWithEdge } = useNodeControl(props);
-  const { selectNodeId, selectedNodeId } = useNodeEditorControl();
 
   return (
-    <div
-      id={`node-type-${id}`}
+    <main
+      id={`note-type-${type}-${id}`}
       className={clsx(
-        selected && "border-[3px]",
-        "hover:border-[3px]",
-        "relative border-2 rounded-md border-stone-500 shadow-lg bg-white",
+        "relative group",
+        "custom-drag-handle",
+        "bg-neutral-50 dark:bg-neutral-600",
+        "border-2 border-neutral-500 dark:border-neutral-700 border-inherit",
+        "hover:border-3 hover:border-neutral-500 dark:hover:border-neutral-500",
         dragging
-          ? "animate-grip shadow-2xl shadow-stone-950 cursor-grabbing"
+          ? "animate-grip shadow-2xl shadow-neutral-500 dark:shadow-neutral-600 cursor-grabbing"
           : "cursor-pointer",
-        selectedNodeId === id && "border-[3px]",
-        props.className
+        className
       )}
+      onDoubleClick={onDoubleClick}
     >
-      {selectedNodeId === id && (
-        <div className="flex absolute -right-4 -top-3 h-6 w-6">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-500 opacity-75" />
-          <span className="relative inline-flex rounded-full h-5 w-5 bg-slate-500" />
-        </div>
-      )}
-
-      <div
-        id={`node-type-${id}-header`}
-        className={"flex bg-white rounded-t-md"}
-      >
-        <div
-          className={clsx(
-            "custom-drag-handle",
-            "text-xs text-stone-600 flex-1",
-            dragging ? "cursor-grabbing" : "cursor-grab"
-          )}
-        >
-          <div className="p-2">TYPE: {type.toUpperCase()}</div>
-        </div>
-        <div className="text-stone-600 flex-none">
-          <button
-            type="button"
-            className="hover:bg-stone-200 rounded-md p-1 m-1"
-            onClick={() => {
-              selectNodeId(id);
-            }}
-          >
-            <PencilSquareIcon className="w-4 h-4" />
-          </button>
-        </div>
+      <div className="absolute -left-2 -top-2 z-10">
+        {editing && <PointBadge active className="w-4 h-4" />}
       </div>
 
-      <div
-        id={`node-type-${id}-content`}
-        className="rounded-b-md bg-white px-4"
-      >
-        {children}
-      </div>
+      <main className="h-full w-full">{children}</main>
 
       {isConnectable && (
         <>
@@ -109,6 +88,6 @@ export default function Node(props: CommonNodeProps) {
           />
         </>
       )}
-    </div>
+    </main>
   );
 }
