@@ -20,7 +20,7 @@ export default function SidePeek() {
     onChange,
     onDelete,
     onSave,
-    selectNodeId,
+    select,
   } = useNodeEditorControl();
 
   const handleChangeLabel = (e: ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +51,7 @@ export default function SidePeek() {
                 "disabled:opacity-50 disabled:cursor-not-allowed"
               )}
               disabled={!before}
-              onClick={() => before && selectNodeId(before?.id)}
+              onClick={() => before && select(before?.id)}
             >
               <ChevronUpIcon className="w-4 h-4" />
             </button>
@@ -62,7 +62,7 @@ export default function SidePeek() {
                 "disabled:opacity-50 disabled:cursor-not-allowed"
               )}
               disabled={!after}
-              onClick={() => after && selectNodeId(after?.id)}
+              onClick={() => after && select(after?.id)}
             >
               <ChevronDownIcon className="w-4 h-4" />
             </button>
