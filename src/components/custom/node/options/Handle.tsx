@@ -13,7 +13,7 @@ export default function CustomHandle(props: CustomHandleProps) {
   return (
     <Handle
       {...props}
-      className={clsx(["!bg-stone-800", props.className])}
+      className={clsx(["!bg-neutral-700 p-1", props.className])}
       isValidConnection={isValidConnection}
       style={{ borderRadius: "50%", ...props.style }}
     />
