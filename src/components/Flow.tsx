@@ -5,7 +5,7 @@ import { useFlowStore } from "@/hooks/useFlowStore";
 import { useSidePanelControl } from "@/hooks/useSidePanelControl";
 
 import MarkdownNode from "@/components/custom/node/Markdown";
-import SidePanel from "@/components/SidePanel";
+import SidePanel from "@/components/FlowToolBar";
 
 import "reactflow/dist/style.css";
 
