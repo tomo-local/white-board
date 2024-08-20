@@ -43,36 +43,44 @@ export default function SidePeek() {
         id="side-peek"
         className={clsx(
           "bg-neutral-200 dark:bg-neutral-700",
-          "flex flex-col h-full w-1/2"
+          "flex flex-col h-full w-1/2",
+          "border-l-2 border-neutral-300 dark:border-neutral-500"
         )}
       >
         <div className="flex p-2 flex-none w-full justify-between">
           <div className="flex h-full space-x-1">
-            <IconButton type="button" onClick={resetNodeId} chip="閉じる">
+            <IconButton
+              type="button"
+              onClick={resetNodeId}
+              chip="閉じる"
+              className="hover:bg-neutral-300 dark:hover:bg-slate-500"
+            >
               <ChevronDoubleRightIcon className="w-4 h-4" />
             </IconButton>
             <div className="border-l border-stone-400 my-1.5" />
             <IconButton
               type="button"
-              className={"disabled:opacity-50 disabled:cursor-not-allowed"}
+              className="disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-300 dark:hover:bg-slate-500"
               disabled={!before}
-              chip="前へ"
               onClick={() => before && select(before?.id)}
             >
               <ChevronUpIcon className="w-4 h-4" />
             </IconButton>
             <IconButton
               type="button"
-              className={"disabled:opacity-50 disabled:cursor-not-allowed"}
+              className="disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-300 dark:hover:bg-slate-500"
               disabled={!after}
-              chip="次へ"
               onClick={() => after && select(after?.id)}
             >
               <ChevronDownIcon className="w-4 h-4" />
             </IconButton>
           </div>
           <div className="flex h-full space-x-1">
-            <IconButton type="button" onClick={handleDelete} chip="削除">
+            <IconButton
+              type="button"
+              onClick={handleDelete}
+              className="hover:bg-neutral-300 dark:hover:bg-slate-500"
+            >
               <TrashIcon className="w-4 h-4" />
             </IconButton>
             <IconButton type="button">
