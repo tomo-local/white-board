@@ -1,4 +1,4 @@
-import { Panel } from "reactflow";
+import { Panel } from "@xyflow/react";
 import {
   Cog6ToothIcon,
   PencilSquareIcon,

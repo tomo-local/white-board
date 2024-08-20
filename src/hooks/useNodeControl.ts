@@ -5,16 +5,14 @@ import {
   type NodeProps,
   type XYPosition,
   type Connection,
+  type Node,
   Position,
-} from "reactflow";
+} from "@xyflow/react";
 import { useAtomCallback } from "jotai/utils";
 import { nodesAtom } from "@/jotai/flow/page";
 import type { CustomNodeTypes } from "@/jotai/flow/panel";
 import { useFlowStore } from "@/hooks/useFlowStore";
-
-type NodeData = {
-  label: string;
-};
+import type { MarkdownNode } from "@/components/custom/node/Markdown";
 
 const buildConnection = (
   type: Position,
@@ -54,7 +52,9 @@ const buildConnection = (
   }
 };
 
-export const useNodeControl = (initNode: NodeProps<NodeData>) => {
+type InitNode = NodeProps<MarkdownNode>;
+
+export const useNodeControl = (initNode: InitNode) => {
   const { id }: { id: string } = useParams();
   const { addNode, addEdge } = useFlowStore();
   const [node, setNode] = useState(initNode);
@@ -76,7 +76,7 @@ export const useNodeControl = (initNode: NodeProps<NodeData>) => {
         ...connection,
       });
     },
-    onChange: (newData: NodeProps<NodeData>) => setNode(newData),
+    onChange: (newData: InitNode) => setNode(newData),
     onSave: useAtomCallback(
       useCallback(
         (get, set) => {

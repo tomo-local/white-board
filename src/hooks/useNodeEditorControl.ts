@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "next/navigation";
-import type { Node } from "reactflow";
+import type { Node } from "@xyflow/react";
 
 import { useAtomValue, useAtom } from "jotai";
 import { useAtomCallback } from "jotai/utils";
@@ -11,8 +11,9 @@ import {
   beforeAndAfterNodeAtom,
   nodesAtom,
 } from "@/jotai/flow/page";
+import type { MarkdownNode } from "@/components/custom/node/Markdown";
 
-type NodeData = Pick<Node, "data">;
+type NodeData = MarkdownNode["data"];
 
 export const useNodeEditorControl = () => {
   const { id }: { id: string } = useParams();
