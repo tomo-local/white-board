@@ -56,7 +56,7 @@ export default function MarkdownNode(props: NodeProps<NodeData>) {
           <IconButton
             type="button"
             className={clsx(
-              "bg-neutral-200 dark:bg-neutral-700 rounded-l rounded-r-none"
+              "bg-neutral-200 dark:bg-neutral-700 rounded-l rounded-r-none hover:bg-neutral-300 dark:hover:bg-slate-500"
             )}
             onClick={() => {
               if (editable) {
@@ -64,16 +64,14 @@ export default function MarkdownNode(props: NodeProps<NodeData>) {
               }
               setEditable(!editable);
             }}
-            chip={editable ? "保存" : "編集"}
           >
             <PencilSquareIcon className="w-3 h-3 dark:text-neutral-100 text-neutral-600" />
           </IconButton>
           <IconButton
             type="button"
             className={clsx(
-              "bg-neutral-200 dark:bg-neutral-700 rounded-r rounded-l-none"
+              "bg-neutral-200 dark:bg-neutral-700 rounded-r rounded-l-none hover:bg-neutral-300 dark:hover:bg-slate-500"
             )}
-            chip={selectId === node.id ? "閉じる" : "開く"}
             onClick={() => {
               selectId === node.id ? select(null) : select(node.id);
             }}
