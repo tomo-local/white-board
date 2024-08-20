@@ -1,4 +1,4 @@
-import type { Edge, Node } from "reactflow";
+import type { Edge, Node } from "@xyflow/react";
 import { atomWithStorage } from "jotai/utils";
 import { v4 as uuid } from "uuid";
 

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "next/navigation";
-import type { Node } from "reactflow";
+import type { Node } from "@xyflow/react";
 
 import { useAtomValue, useAtom } from "jotai";
 import { useAtomCallback } from "jotai/utils";

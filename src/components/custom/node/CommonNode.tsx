@@ -1,5 +1,5 @@
 "use client";
-import { Position, type NodeProps } from "reactflow";
+import { Position, type NodeProps } from "@xyflow/react";
 import { clsx } from "clsx";
 
 import CustomHandle from "@/components/custom/node/options/Handle";

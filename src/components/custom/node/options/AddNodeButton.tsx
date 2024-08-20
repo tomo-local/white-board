@@ -3,7 +3,7 @@ import {
   Position,
   type XYPosition,
   type NodeProps,
-} from "reactflow";
+} from "@xyflow/react";
 import { ArrowDownOnSquareIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 import type { CustomNodeTypes } from "@/jotai/flow/panel";
@@ -41,14 +41,14 @@ export default function AddNodeToolbar({
   selected,
   displayPosition,
   onClick,
-  xPos,
-  yPos,
+  positionAbsoluteX,
+  positionAbsoluteY,
 }: Props) {
   const onAddNode = () => {
     onClick(
       type,
       displayPosition,
-      calNextPosition(xPos, yPos, displayPosition)
+      calNextPosition(positionAbsoluteX, positionAbsoluteY, displayPosition)
     );
   };
 

@@ -1,6 +1,6 @@
 "use client";
 import { type ChangeEvent, useEffect, useState } from "react";
-import type { NodeProps } from "reactflow";
+import type { NodeProps, Node } from "@xyflow/react";
 import { clsx } from "clsx";
 
 import {
@@ -15,11 +15,14 @@ import MarkdownIcon from "@/components/common/icons/MarkdownIcon";
 import { useNodeControl } from "@/hooks/useNodeControl";
 import { useNodeEditorControl } from "@/hooks/useNodeEditorControl";
 
-type NodeData = {
-  label: string;
-};
+export type MarkdownNode = Node<
+  {
+    label: string;
+  },
+  "markdown"
+>;
 
-export default function MarkdownNode(props: NodeProps<NodeData>) {
+export default function MarkdownNode(props: NodeProps<MarkdownNode>) {
   const { node, onChange, onSave } = useNodeControl(props);
   const { selectId, select } = useNodeEditorControl();
 

@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 import { atomFamily } from "jotai/utils";
-import type { Node, Edge } from "reactflow";
+import type { Node, Edge } from "@xyflow/react";
 import {
   pageLocalAtom,
   initialNodes,

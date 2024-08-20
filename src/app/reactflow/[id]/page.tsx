@@ -1,5 +1,5 @@
 "use client";
-import { ReactFlowProvider } from "reactflow";
+import { ReactFlowProvider } from '@xyflow/react';
 
 import styles from "@/app/reactflow/page.module.css";
 import "@/app/globals.css";

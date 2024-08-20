@@ -8,7 +8,7 @@ import {
   type EdgeChange,
   type NodeChange,
   type Connection,
-} from "reactflow";
+} from "@xyflow/react";
 import { useAtomValue } from "jotai";
 import { useAtomCallback } from "jotai/utils";
 
