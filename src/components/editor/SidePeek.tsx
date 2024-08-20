@@ -25,10 +25,16 @@ export default function SidePeek() {
   } = useNodeEditorControl();
 
   const handleChangeLabel = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!nodeData) {
+      return;
+    }
     onChange({ ...nodeData, label: e.target.value });
   };
 
   const handleChangeContext = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    if (!nodeData) {
+      return;
+    }
     onChange({ ...nodeData, context: e.target.value });
   };
 
@@ -136,7 +142,7 @@ export default function SidePeek() {
                 "w-full h-full rounded-md bg-stone-200 focus:outline-none focus:shadow-outline p-2 hover:bg-stone-300",
                 "dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:focus:bg-neutral-600"
               )}
-              value={nodeData?.context}
+              value={nodeData?.context || ""}
               onChange={handleChangeContext}
               onBlur={onSave}
               onKeyDown={(e) => {

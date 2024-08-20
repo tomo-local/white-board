@@ -18,6 +18,9 @@ import { useNodeEditorControl } from "@/hooks/useNodeEditorControl";
 export type MarkdownNode = Node<
   {
     label: string;
+    context: string | null;
+    created_at: string;
+    update_at: string;
   },
   "markdown"
 >;

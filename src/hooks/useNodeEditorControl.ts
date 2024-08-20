@@ -11,8 +11,9 @@ import {
   beforeAndAfterNodeAtom,
   nodesAtom,
 } from "@/jotai/flow/page";
+import type { MarkdownNode } from "@/components/custom/node/Markdown";
 
-type NodeData = Pick<Node, "data">;
+type NodeData = MarkdownNode["data"];
 
 export const useNodeEditorControl = () => {
   const { id }: { id: string } = useParams();

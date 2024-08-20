@@ -1,11 +1,14 @@
 import { atom } from "jotai";
 import { atomFamily } from "jotai/utils";
-import type { Node, Edge } from "@xyflow/react";
+import type { Edge } from "@xyflow/react";
 import {
   pageLocalAtom,
   initialNodes,
   initialEdges,
 } from "@/jotai/storage/local";
+import type { MarkdownNode } from "@/components/custom/node/Markdown";
+
+type Node = MarkdownNode;
 
 export const pageAtom = atomFamily((id: string) => pageLocalAtom(id));
 
@@ -39,7 +42,18 @@ export const selectedNodeAtom = atomFamily((id: string) =>
   atom((get) => {
     const page = get(pageAtom(id));
     const selectedNodeId = get(selectedNodeIdAtom);
-    return page.nodes.find((node) => node.id === selectedNodeId);
+
+    if (!selectedNodeId) {
+      return null;
+    }
+
+    const targetNode = page.nodes.find((node) => node.id === selectedNodeId);
+
+    if (!targetNode) {
+      return null;
+    }
+
+    return targetNode;
   })
 );
 
