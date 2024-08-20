@@ -8,6 +8,7 @@ import PointBadge from "@/components/common/badge/PointBadge";
 
 import { useNodeControl } from "@/hooks/useNodeControl";
 import type { CustomNodeTypes } from "@/jotai/flow/panel";
+import type { MarkdownNode } from "@/components/custom/node/Markdown";
 
 type CommonNodeProps = {
   type: CustomNodeTypes;
@@ -16,7 +17,7 @@ type CommonNodeProps = {
   isConnectable?: boolean;
   children: React.ReactNode;
   onDoubleClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-} & NodeProps;
+} & NodeProps<MarkdownNode>;
 
 export default function Node(props: CommonNodeProps) {
   const {
