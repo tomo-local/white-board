@@ -1,33 +1,26 @@
 "use client";
 import { type ChangeEvent, useEffect, useState } from "react";
-import type { NodeProps, Node } from "@xyflow/react";
+import type { NodeProps } from "@xyflow/react";
+import { useAtom } from "jotai";
 import { clsx } from "clsx";
 
 import {
   ArrowTopRightOnSquareIcon,
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
+
 import CommonNode from "@/components/custom/node/CommonNode";
 import IconButton from "@/components/common/button/IconButton";
 import EditableText from "@/components/common/input/EditableText";
 import MarkdownIcon from "@/components/common/icons/MarkdownIcon";
 
 import { useNodeControl } from "@/hooks/useNodeControl";
-import { useNodeEditorControl } from "@/hooks/useNodeEditorControl";
+import { selectNodeIdAtom } from "@/jotai/flow/page";
+import type { MarkdownNode as Node } from "@/types/flow";
 
-export type MarkdownNode = Node<
-  {
-    label: string;
-    context: string | null;
-    created_at: string;
-    update_at: string;
-  },
-  "markdown"
->;
-
-export default function MarkdownNode(props: NodeProps<MarkdownNode>) {
+export default function MarkdownNode(props: NodeProps<Node>) {
   const { node, onChange, onSave } = useNodeControl(props);
-  const { selectId, select } = useNodeEditorControl();
+  const [selectId, select] = useAtom(selectNodeIdAtom);
 
   const [editable, setEditable] = useState(false);
 
@@ -53,9 +46,7 @@ export default function MarkdownNode(props: NodeProps<MarkdownNode>) {
       className="h-24 w-44 rounded-md"
       editing={selectId === node.id}
       isConnectable
-      onDoubleClick={() =>
-        selectId !== node.id ? select(node.id) : select(null)
-      }
+      onDoubleClick={() => select(node.id)}
     >
       <>
         <div className="absolute right-1 top-1 group-hover:visible invisible divide-x divide-neutral-400">
@@ -78,9 +69,7 @@ export default function MarkdownNode(props: NodeProps<MarkdownNode>) {
             className={clsx(
               "bg-neutral-200 dark:bg-neutral-700 rounded-r rounded-l-none hover:bg-neutral-300 dark:hover:bg-slate-500"
             )}
-            onClick={() => {
-              selectId === node.id ? select(null) : select(node.id);
-            }}
+            onClick={() => select(node.id)}
           >
             <ArrowTopRightOnSquareIcon className="w-3 h-3 dark:text-neutral-100 text-neutral-600" />
           </IconButton>
@@ -101,7 +90,7 @@ export default function MarkdownNode(props: NodeProps<MarkdownNode>) {
               editable={editable}
               placeholder="入力してください"
               onClick={() => setEditable(true)}
-              value={node.data.label}
+              value={props.data.label}
               onChange={handleChangeLabel}
               onSave={handleSaveLabel}
             />

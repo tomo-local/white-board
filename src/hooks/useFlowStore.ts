@@ -15,7 +15,7 @@ import { useAtomCallback } from "jotai/utils";
 import { nodesAtom, edgesAtom } from "@/jotai/flow/page";
 import type { CustomNodeTypes } from "@/jotai/flow/panel";
 import { v4 as uuid } from "uuid";
-import type { MarkdownNode } from "@/components/custom/node/Markdown";
+import type { CustomNodes as Node } from "@/types/flow";
 
 type Position = {
   x: number;
@@ -31,10 +31,9 @@ export const useFlowStore = () => {
     edges: useAtomValue(edgesAtom(id)),
     onNodesChange: useAtomCallback(
       useCallback(
-        (get, set, change: NodeChange<MarkdownNode>[]) => {
+        (get, set, change: NodeChange<Node>[]) => {
           const nodes = get(nodesAtom(id));
-          const newNodes = applyNodeChanges(change, nodes);
-          set(nodesAtom(id), newNodes);
+          set(nodesAtom(id), applyNodeChanges(change, nodes));
         },
         [id]
       )
@@ -43,8 +42,7 @@ export const useFlowStore = () => {
       useCallback(
         (get, set, change: EdgeChange[]) => {
           const edges = get(edgesAtom(id));
-          const newEdges = applyEdgeChanges(change, edges);
-          set(edgesAtom(id), newEdges);
+          set(edgesAtom(id), applyEdgeChanges(change, edges));
         },
         [id]
       )
@@ -60,7 +58,7 @@ export const useFlowStore = () => {
         ) => {
           const nodes = get(nodesAtom(id));
           const { x, y } = position;
-          const newNode: MarkdownNode = {
+          const newNode: Node = {
             id: optionId || uuid(),
             type: "markdown",
             dragHandle: ".custom-drag-handle",

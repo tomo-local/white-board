@@ -1,11 +1,10 @@
 "use client";
-import { ReactFlowProvider } from '@xyflow/react';
+import { ReactFlowProvider } from "@xyflow/react";
 
 import styles from "@/app/reactflow/page.module.css";
 import "@/app/globals.css";
 import Flow from "@/components/Flow";
-import SidePeek from "@/components/editor/SidePeek";
-import NodeListSideView from "@/components/tools/side/SideView";
+import NodeListSideView from "@/components/tools/FlowSideView";
 import clsx from "clsx";
 
 export default function ReactFlowPage() {
@@ -14,7 +13,6 @@ export default function ReactFlowPage() {
       <ReactFlowProvider>
         <NodeListSideView />
         <Flow />
-        <SidePeek />
       </ReactFlowProvider>
     </main>
   );

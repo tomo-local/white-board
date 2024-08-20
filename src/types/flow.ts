@@ -40,3 +40,7 @@ export type Page = {
   nodes: CustomNodes[];
   edges: Edge[];
 };
+
+export type FlowParams = {
+  id: string;
+};

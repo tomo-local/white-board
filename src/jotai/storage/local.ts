@@ -1,9 +1,7 @@
 import type { Edge } from "@xyflow/react";
 import { atomWithStorage } from "jotai/utils";
 import { v4 as uuid } from "uuid";
-import type { MarkdownNode } from "@/components/custom/node/Markdown";
-
-type Node = MarkdownNode;
+import type { CustomNodes as Node } from "@/types/flow";
 
 export type PageListItem = {
   id: string;

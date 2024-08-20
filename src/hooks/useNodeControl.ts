@@ -5,14 +5,13 @@ import {
   type NodeProps,
   type XYPosition,
   type Connection,
-  type Node,
   Position,
 } from "@xyflow/react";
 import { useAtomCallback } from "jotai/utils";
 import { nodesAtom } from "@/jotai/flow/page";
 import type { CustomNodeTypes } from "@/jotai/flow/panel";
 import { useFlowStore } from "@/hooks/useFlowStore";
-import type { MarkdownNode } from "@/components/custom/node/Markdown";
+import type { CustomNodes as Node } from "@/types/flow";
 
 const buildConnection = (
   type: Position,
@@ -52,9 +51,7 @@ const buildConnection = (
   }
 };
 
-type InitNode = NodeProps<MarkdownNode>;
-
-export const useNodeControl = (initNode: InitNode) => {
+export const useNodeControl = (initNode: NodeProps<Node>) => {
   const { id }: { id: string } = useParams();
   const { addNode, addEdge } = useFlowStore();
   const [node, setNode] = useState(initNode);
@@ -76,28 +73,32 @@ export const useNodeControl = (initNode: InitNode) => {
         ...connection,
       });
     },
-    onChange: (newData: InitNode) => setNode(newData),
+    onChange: (newData: NodeProps<Node>) => setNode(newData),
     onSave: useAtomCallback(
       useCallback(
         (get, set) => {
           const nodes = get(nodesAtom(id));
           const index = nodes.findIndex((n) => n.id === node.id);
 
-          if (index === -1) {
+          if (!index) {
             return;
           }
 
+          const data = {
+            ...node.data,
+            update_at: new Date().toISOString(),
+          };
+
           const newNodes = [...nodes];
+          // @ts-ignore
           newNodes[index] = {
             ...newNodes[index],
-            data: {
-              ...node.data,
-              update_at: new Date().toISOString(),
-            },
+            data,
           };
+
           set(nodesAtom(id), newNodes);
         },
-        [node, id]
+        [id, node]
       )
     ),
   };
