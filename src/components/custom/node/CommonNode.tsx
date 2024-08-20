@@ -1,96 +1,94 @@
 "use client";
-import { Position, type NodeProps } from "reactflow";
-import { PencilSquareIcon } from "@heroicons/react/24/outline";
+import { Position, type NodeProps } from "@xyflow/react";
 import { clsx } from "clsx";
 
 import CustomHandle from "@/components/custom/node/options/Handle";
-import AddNodeToolbar from "@/components/custom/node/options/AddNodeToolbar";
+import AddNodeToolbar from "@/components/custom/node/options/AddNodeButton";
+import PointBadge from "@/components/common/badge/PointBadge";
+
 import { useNodeControl } from "@/hooks/useNodeControl";
 import type { CustomNodeTypes } from "@/jotai/flow/panel";
+import type { MarkdownNode } from "@/components/custom/node/Markdown";
 
 type CommonNodeProps = {
   type: CustomNodeTypes;
+  editing?: boolean;
   className?: string;
+  isConnectable?: boolean;
   children: React.ReactNode;
-} & NodeProps;
+  onDoubleClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+} & NodeProps<MarkdownNode>;
 
 export default function Node(props: CommonNodeProps) {
-  const { id, type, selected, dragging, children } = props;
+  const {
+    id,
+    type,
+    selected,
+    dragging,
+    children,
+    isConnectable,
+    className,
+    editing,
+    onDoubleClick,
+  } = props;
   const { addNodeWithEdge } = useNodeControl(props);
 
   return (
-    <div
-      id={`node-type-${id}`}
+    <main
+      id={`note-type-${type}-${id}`}
       className={clsx(
-        selected && "border-[3px]",
-        "hover:border-[3px]",
-        "border-2 rounded-md border-stone-500 shadow-lg bg-white",
+        "relative group",
+        "custom-drag-handle",
+        "bg-neutral-100 dark:bg-neutral-600",
+        "border-2 border-neutral-500 dark:border-neutral-700 border-inherit",
+        "hover:border-3 hover:border-neutral-500 dark:hover:border-neutral-500",
         dragging
-          ? "animate-grip shadow-2xl shadow-stone-950 cursor-grabbing"
+          ? "animate-grip shadow-2xl shadow-neutral-500 dark:shadow-neutral-600 cursor-grabbing"
           : "cursor-pointer",
-        props.className
+        className
       )}
+      onDoubleClick={onDoubleClick}
     >
-      <div
-        id={`node-type-${id}-header`}
-        className={"flex bg-white rounded-t-md"}
-      >
-        <div
-          className={clsx(
-            "custom-drag-handle",
-            "text-xs text-stone-400 flex-1",
-            dragging ? "cursor-grabbing" : "cursor-grab"
-          )}
-        >
-          <div className="p-2">TYPE: {type.toUpperCase()}</div>
-        </div>
-        <div className="text-stone-400 flex-none">
-          <button
-            type="button"
-            className="hover:bg-slate-100 rounded-md p-1 m-1"
-          >
-            <PencilSquareIcon className="w-4 h-4" />
-          </button>
-        </div>
+      <div className="absolute -left-2 -top-2 z-10">
+        {editing && <PointBadge active className="w-4 h-4" />}
       </div>
 
-      <div
-        id={`node-type-${id}-content`}
-        className="rounded-b-md bg-white px-4"
-      >
-        {children}
-      </div>
+      <main className="h-full w-full">{children}</main>
 
-      <>
-        <CustomHandle type="source" position={Position.Top} id="top" />
-        <CustomHandle type="source" position={Position.Right} id="right" />
-        <CustomHandle type="target" position={Position.Left} id="left" />
-        <CustomHandle type="target" position={Position.Bottom} id="bottom" />
-      </>
+      {isConnectable && (
+        <>
+          <CustomHandle type="source" position={Position.Top} id="top" />
+          <CustomHandle type="source" position={Position.Right} id="right" />
+          <CustomHandle type="target" position={Position.Left} id="left" />
+          <CustomHandle type="target" position={Position.Bottom} id="bottom" />
+        </>
+      )}
 
-      <>
-        <AddNodeToolbar
-          {...props}
-          type={type}
-          displayPosition={Position.Top}
-          onClick={addNodeWithEdge}
-        />
-        <AddNodeToolbar
-          {...props}
-          displayPosition={Position.Right}
-          onClick={addNodeWithEdge}
-        />
-        <AddNodeToolbar
-          {...props}
-          displayPosition={Position.Left}
-          onClick={addNodeWithEdge}
-        />
-        <AddNodeToolbar
-          {...props}
-          displayPosition={Position.Bottom}
-          onClick={addNodeWithEdge}
-        />
-      </>
-    </div>
+      {isConnectable && (
+        <>
+          <AddNodeToolbar
+            {...props}
+            type={type}
+            displayPosition={Position.Top}
+            onClick={addNodeWithEdge}
+          />
+          <AddNodeToolbar
+            {...props}
+            displayPosition={Position.Right}
+            onClick={addNodeWithEdge}
+          />
+          <AddNodeToolbar
+            {...props}
+            displayPosition={Position.Left}
+            onClick={addNodeWithEdge}
+          />
+          <AddNodeToolbar
+            {...props}
+            displayPosition={Position.Bottom}
+            onClick={addNodeWithEdge}
+          />
+        </>
+      )}
+    </main>
   );
 }

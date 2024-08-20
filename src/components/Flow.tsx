@@ -1,15 +1,16 @@
 "use client";
-import ReactFlow, { MiniMap } from "reactflow";
+import { ReactFlow, MiniMap, Background } from "@xyflow/react";
+import type { NodeTypes } from "@xyflow/react";
 
 import { useFlowStore } from "@/hooks/useFlowStore";
 import { useSidePanelControl } from "@/hooks/useSidePanelControl";
 
 import MarkdownNode from "@/components/custom/node/Markdown";
-import SidePanel from "@/components/SidePanel";
+import SidePanel from "@/components/tools/FlowToolBar";
 
-import "reactflow/dist/style.css";
+import "@xyflow/react/dist/style.css";
 
-const nodeTypes = {
+const nodeTypes: NodeTypes = {
   markdown: MarkdownNode,
 };
 
@@ -17,11 +18,12 @@ export default function Flow() {
   const { nodes, edges, onNodesChange, onEdgesChange, addNode, addEdge } =
     useFlowStore();
 
-  const { onPanelClick } = useSidePanelControl(addNode);
+  const { onPanelClick, selected } = useSidePanelControl(addNode);
 
   return (
-    <div style={{ width: "100vw", height: "100vh" }}>
+    <div className="w-full h-full bg-neutral-200 dark:bg-neutral-800">
       <ReactFlow
+        className={selected ? "custom-cursor-pointer" : ""}
         nodeTypes={nodeTypes}
         proOptions={{ hideAttribution: true }}
         nodes={nodes}
@@ -30,9 +32,11 @@ export default function Flow() {
         onEdgesChange={onEdgesChange}
         onPaneClick={onPanelClick}
         onConnect={addEdge}
+        fitView
       >
-        <MiniMap />
+        <Background />
         <SidePanel />
+        <MiniMap pannable zoomable />
       </ReactFlow>
     </div>
   );

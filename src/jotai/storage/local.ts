@@ -1,6 +1,16 @@
-import type { Edge, Node } from "reactflow";
+import type { Edge } from "@xyflow/react";
 import { atomWithStorage } from "jotai/utils";
 import { v4 as uuid } from "uuid";
+import type { MarkdownNode } from "@/components/custom/node/Markdown";
+
+type Node = MarkdownNode;
+
+export type PageListItem = {
+  id: string;
+  title: string;
+  created_at: string;
+  update_at: string;
+};
 
 export type Page = {
   id: string;
@@ -11,36 +21,49 @@ export type Page = {
   edges: Edge[];
 };
 
+export const defaultPage = ({ id, title }: Pick<Page, "title" | "id">) => {
+  return {
+    id: id,
+    title: title,
+    created_at: new Date().toISOString(),
+    update_at: new Date().toISOString(),
+    nodes: initialNodes,
+    edges: initialEdges,
+  } as Page;
+};
+
 export const initialNodes: Node[] = [
   {
     id: uuid(),
     type: "markdown",
     dragHandle: ".custom-drag-handle",
-    data: { label: "Node 0", description: "Sample" },
+    data: {
+      label: "Node 0",
+      context: "Sample",
+      created_at: new Date().toISOString(),
+      update_at: new Date().toISOString(),
+    },
     position: { x: 100, y: 100 },
   },
 ];
 
 export const initialEdges: Edge[] = [];
 
-//MEMO： 廃止予定
-export const pagesAtom = atomWithStorage("wb-pages", [] as Page[], undefined, {
-  getOnInit: true,
-});
-
 export const pageLocalAtom = (id: string) =>
   atomWithStorage(
     `wb-page-${id}`,
-    {
-      id: id,
-      title: "New Page",
-      created_at: new Date().toISOString(),
-      update_at: new Date().toISOString(),
-      nodes: initialNodes,
-      edges: initialEdges,
-    } as Page,
+    defaultPage({ id, title: "New Page" }),
     undefined,
     {
       getOnInit: true,
     }
   );
+
+export const pageListLocalAtom = atomWithStorage<PageListItem[]>(
+  "wb-page-list",
+  [],
+  undefined,
+  {
+    getOnInit: true,
+  }
+);

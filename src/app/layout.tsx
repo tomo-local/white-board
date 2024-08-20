@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import clsx from "clsx";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/common/header/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,10 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <nav className="absolute z-50 bg-slate-800 w-full">
-          <a href="/reactflow">White Board</a>
-        </nav>
-        {children}
+        <div className="flex flex-col h-screen w-screen bg-neutral-50 dark:bg-neutral-900">
+          <Header className="flex-none" />
+          <div className="flex-grow">{children}</div>
+        </div>
       </body>
     </html>
   );

@@ -15,7 +15,7 @@ const config: Config = {
       },
       animation: {
         "slide-top": "slide-top 0.1s linear   both",
-        "grip": "grip 0.1s linear   both",
+        grip: "grip 0.1s linear   both",
       },
       keyframes: {
         "slide-top": {
@@ -26,7 +26,7 @@ const config: Config = {
             transform: "translateY(-10px)",
           },
         },
-        "grip": {
+        grip: {
           "0%": {
             transform: "rotate(0deg) translateY(0)",
           },

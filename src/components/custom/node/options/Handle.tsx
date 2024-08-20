@@ -1,19 +1,26 @@
 import React, { type HTMLAttributes } from "react";
-import { Handle, type Connection, type HandleProps } from "reactflow";
+import {
+  Handle,
+  type Connection,
+  type HandleProps,
+  type EdgeTypes,
+  type IsValidConnection,
+} from "@xyflow/react";
 import { clsx } from "clsx";
 
 type CustomHandleProps = HandleProps &
   Omit<HTMLAttributes<HTMLDivElement>, "id">;
 
 export default function CustomHandle(props: CustomHandleProps) {
-  const isValidConnection = (connection: Connection) => {
+
+  const isValidConnection: IsValidConnection = (connection) => {
     return connection.source !== connection.target;
   };
 
   return (
     <Handle
       {...props}
-      className={clsx(["!bg-stone-800", props.className])}
+      className={clsx(["!bg-neutral-700 p-1", props.className])}
       isValidConnection={isValidConnection}
       style={{ borderRadius: "50%", ...props.style }}
     />
