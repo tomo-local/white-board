@@ -3,7 +3,7 @@ import { Position, type NodeProps } from "reactflow";
 import { clsx } from "clsx";
 
 import CustomHandle from "@/components/custom/node/options/Handle";
-import AddNodeToolbar from "@/components/custom/node/options/AddNodeToolbar";
+import AddNodeToolbar from "@/components/custom/node/options/AddNodeButton";
 import PointBadge from "@/components/common/badge/PointBadge";
 
 import { useNodeControl } from "@/hooks/useNodeControl";
@@ -38,7 +38,7 @@ export default function Node(props: CommonNodeProps) {
       className={clsx(
         "relative group",
         "custom-drag-handle",
-        "bg-neutral-50 dark:bg-neutral-600",
+        "bg-neutral-100 dark:bg-neutral-600",
         "border-2 border-neutral-500 dark:border-neutral-700 border-inherit",
         "hover:border-3 hover:border-neutral-500 dark:hover:border-neutral-500",
         dragging

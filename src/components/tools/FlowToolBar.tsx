@@ -5,7 +5,7 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
-import AddNodeMenu from "@/components/AddNodeMenu";
+import AddNodeMenu from "@/components/tools/AddNodeMenu";
 
 export default function FlowToolBar() {
   return (

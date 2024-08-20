@@ -1,11 +1,11 @@
 "use client";
-import ReactFlow, { MiniMap } from "reactflow";
+import ReactFlow, { MiniMap, Background } from "reactflow";
 
 import { useFlowStore } from "@/hooks/useFlowStore";
 import { useSidePanelControl } from "@/hooks/useSidePanelControl";
 
 import MarkdownNode from "@/components/custom/node/Markdown";
-import SidePanel from "@/components/FlowToolBar";
+import SidePanel from "@/components/tools/FlowToolBar";
 
 import "reactflow/dist/style.css";
 
@@ -32,6 +32,7 @@ export default function Flow() {
         onPaneClick={onPanelClick}
         onConnect={addEdge}
       >
+        <Background />
         <MiniMap className="bg-neutral-200 dark:bg-neutral-800" />
         <SidePanel />
       </ReactFlow>
