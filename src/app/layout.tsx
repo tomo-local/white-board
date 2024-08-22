@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import clsx from "clsx";
+import { ThemeProvider } from "next-themes";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/common/header/Header";
@@ -17,12 +17,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <div className="flex flex-col h-screen w-screen bg-neutral-50 dark:bg-neutral-900">
-          <Header className="flex-none" />
-          <div className="flex-grow">{children}</div>
-        </div>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <div className="flex flex-col h-screen w-screen bg-neutral-50 dark:bg-neutral-900">
+            <Header className="flex-none" />
+            <div className="flex-grow">{children}</div>
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );
