@@ -1,6 +1,5 @@
 import { atom } from "jotai";
-
-export type CustomNodeTypes = "markdown" | "normal" | "document";
+import type { CustomNodeTypes } from "@/types/flow";
 
 type SidePanelButton = {
   selected: CustomNodeTypes | null;

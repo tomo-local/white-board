@@ -1,7 +1,6 @@
 "use client";
 import { type ChangeEvent, useEffect, useState } from "react";
 import type { NodeProps } from "@xyflow/react";
-import { useAtom } from "jotai";
 import { clsx } from "clsx";
 
 import {

@@ -9,9 +9,8 @@ import {
 } from "@xyflow/react";
 import { useAtomCallback } from "jotai/utils";
 import { nodesAtom } from "@/jotai/flow/page";
-import type { CustomNodeTypes } from "@/jotai/flow/panel";
 import { useFlowStore } from "@/hooks/useFlowStore";
-import type { CustomNodes as Node } from "@/types/flow";
+import type { CustomNodes as Node, CustomNodeTypes } from "@/types/flow";
 
 const buildConnection = (
   type: Position,
@@ -65,7 +64,7 @@ export const updateNodeData = (
           update_at: new Date().toISOString(),
         },
       };
-    case "document":
+    case "memo":
       return {
         ...node,
         data: {

@@ -13,9 +13,8 @@ import { useAtomValue } from "jotai";
 import { useAtomCallback } from "jotai/utils";
 
 import { nodesAtom, edgesAtom } from "@/jotai/flow/page";
-import type { CustomNodeTypes } from "@/jotai/flow/panel";
 import { v4 as uuid } from "uuid";
-import type { CustomNodes as Node } from "@/types/flow";
+import type { CustomNodes as Node, CustomNodeTypes } from "@/types/flow";
 
 type Position = {
   x: number;
