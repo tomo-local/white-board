@@ -3,6 +3,7 @@ import { HomeIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import ThemeSelector from "./ThemeSelector";
 
 type HeaderProps = {
   className?: string | undefined;
@@ -30,7 +31,7 @@ export default function Header({ className }: HeaderProps) {
               pathname === "/" ? "dark:bg-neutral-700 bg-neutral-200" : ""
             )}
           >
-            <HomeIcon className="w-5 h-5" />
+            <HomeIcon className="size-5" />
           </div>
         </Link>
       </div>
@@ -48,6 +49,10 @@ export default function Header({ className }: HeaderProps) {
             White Board
           </div>
         </Link>
+      </div>
+      <div className="grow" />
+      <div>
+        <ThemeSelector />
       </div>
     </div>
   );

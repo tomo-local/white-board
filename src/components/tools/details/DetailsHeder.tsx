@@ -17,7 +17,7 @@ export default function DetailsHeder({ onDelete }: DetailsHederProps) {
   const { remove, prev, next } = useNodeDetailsControl();
 
   return (
-    <div className="flex p-2 flex-none w-full justify-between">
+    <div className="flex p-2 flex-none w-full justify-between ">
       <div className="flex h-full space-x-1">
         <IconButton
           type="button"
@@ -25,14 +25,14 @@ export default function DetailsHeder({ onDelete }: DetailsHederProps) {
             remove();
           }}
           chip="閉じる"
-          className="hover:bg-neutral-300 dark:hover:bg-slate-500"
+          className="hover:bg-neutral-300 dark:hover:bg-neutral-500"
         >
           <ChevronDoubleRightIcon className="w-4 h-4" />
         </IconButton>
         <div className="border-l border-stone-400 my-1.5" />
         <IconButton
           type="button"
-          className="disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-300 dark:hover:bg-slate-500"
+          className="disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-300 dark:hover:bg-neutral-500"
           disabled={!prev.has()}
           onClick={() => prev.go()}
         >
@@ -40,7 +40,7 @@ export default function DetailsHeder({ onDelete }: DetailsHederProps) {
         </IconButton>
         <IconButton
           type="button"
-          className="disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-300 dark:hover:bg-slate-500"
+          className="disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-300 dark:hover:bg-neutral-500"
           disabled={!next.has()}
           onClick={() => next.go()}
         >
@@ -50,7 +50,7 @@ export default function DetailsHeder({ onDelete }: DetailsHederProps) {
       <div className="flex h-full space-x-1">
         <IconButton
           type="button"
-          className="hover:bg-neutral-300 dark:hover:bg-slate-500"
+          className="hover:bg-neutral-300 dark:hover:bg-neutral-500"
           onClick={onDelete}
         >
           <TrashIcon className="w-4 h-4" />

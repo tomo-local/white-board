@@ -20,7 +20,7 @@ export default function FlowSideView() {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   return (
-    <div className="h-full flex flex-row-reverse">
+    <div className="h-full flex flex-row-reverse text-neutral-500 dark:text-neutral-200">
       <button
         type="button"
         className={clsx(
@@ -35,14 +35,14 @@ export default function FlowSideView() {
         />
       </button>
       <Transition show={open}>
-        <div className={clsx("min-w-64 bg-neutral-100 dark:bg-neutral-700")}>
+        <div className={clsx("min-w-64 bg-neutral-100 dark:bg-neutral-800")}>
           <TabGroup
             as={"div"}
             className="flex flex-col h-full"
             selectedIndex={selectedIndex}
             onChange={setSelectedIndex}
           >
-            <TabList className="flex pt-1">
+            <TabList className="flex pt-1 ">
               {tabs.map(({ name }) => (
                 <Tab
                   key={name}

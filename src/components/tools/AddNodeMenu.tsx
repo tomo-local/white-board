@@ -54,7 +54,8 @@ export default function AddNodeMenu() {
           <button
             type="button"
             className={clsx(
-              "flex items-center justify-center ",
+              "flex items-center justify-center",
+              "text-neutral-500 dark:text-neutral-200",
               "p-2 rounded-md hover:bg-neutral-300 dark:hover:bg-neutral-500"
             )}
             onClick={() => handleAddNode("document")}
