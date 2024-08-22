@@ -5,14 +5,13 @@ import {
   type NodeProps,
   type XYPosition,
   type Connection,
-  type Node,
   Position,
 } from "@xyflow/react";
 import { useAtomCallback } from "jotai/utils";
 import { nodesAtom } from "@/jotai/flow/page";
 import type { CustomNodeTypes } from "@/jotai/flow/panel";
 import { useFlowStore } from "@/hooks/useFlowStore";
-import type { MarkdownNode } from "@/components/custom/node/Markdown";
+import type { CustomNodes as Node } from "@/types/flow";
 
 const buildConnection = (
   type: Position,
@@ -52,52 +51,85 @@ const buildConnection = (
   }
 };
 
-type InitNode = NodeProps<MarkdownNode>;
+export const updateNodeData = (
+  node: Node,
+  data: Record<string, unknown>
+): Node => {
+  switch (node.type) {
+    case "markdown":
+      return {
+        ...node,
+        data: {
+          ...node.data,
+          ...data,
+          update_at: new Date().toISOString(),
+        },
+      };
+    case "document":
+      return {
+        ...node,
+        data: {
+          ...node.data,
+          ...data,
+          update_at: new Date().toISOString(),
+        },
+      };
+  }
+};
 
-export const useNodeControl = (initNode: InitNode) => {
+export const useNodeControl = () => {
   const { id }: { id: string } = useParams();
   const { addNode, addEdge } = useFlowStore();
-  const [node, setNode] = useState(initNode);
-
-  useEffect(() => {
-    setNode(initNode);
-  }, [initNode]);
 
   return {
-    node,
     addNodeWithEdge: (
       type: CustomNodeTypes,
+      id: Node["id"] | NodeProps<Node>["id"],
       position: Position,
       positionXY: XYPosition
     ) => {
       const newNode = addNode(type, positionXY);
-      const connection = buildConnection(position, node.id, newNode.id);
+      const connection = buildConnection(position, id, newNode.id);
       addEdge({
         ...connection,
       });
     },
-    onChange: (newData: InitNode) => setNode(newData),
-    onSave: useAtomCallback(
+    onDelete: useAtomCallback(
       useCallback(
-        (get, set) => {
+        (get, set, node: Node | NodeProps<Node>) => {
           const nodes = get(nodesAtom(id));
           const index = nodes.findIndex((n) => n.id === node.id);
 
-          if (index === -1) {
+          if (!index) {
             return;
           }
 
           const newNodes = [...nodes];
-          newNodes[index] = {
-            ...newNodes[index],
-            data: {
-              ...node.data,
-              update_at: new Date().toISOString(),
-            },
-          };
+
+          newNodes.splice(index, 1);
+
           set(nodesAtom(id), newNodes);
         },
-        [node, id]
+        [id]
+      )
+    ),
+    onSave: useAtomCallback(
+      useCallback(
+        (get, set, node: Node | NodeProps<Node>) => {
+          const nodes = get(nodesAtom(id));
+          const index = nodes.findIndex((n) => n.id === node.id);
+
+          if (!index) {
+            return;
+          }
+
+          const newNodes = [...nodes];
+
+          newNodes[index] = updateNodeData(newNodes[index], node.data);
+
+          set(nodesAtom(id), newNodes);
+        },
+        [id]
       )
     ),
   };

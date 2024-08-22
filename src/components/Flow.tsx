@@ -36,7 +36,7 @@ export default function Flow() {
       >
         <Background />
         <SidePanel />
-        <MiniMap pannable zoomable />
+        <MiniMap pannable zoomable position="bottom-left" />
       </ReactFlow>
     </div>
   );

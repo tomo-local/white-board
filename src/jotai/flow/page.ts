@@ -6,9 +6,8 @@ import {
   initialNodes,
   initialEdges,
 } from "@/jotai/storage/local";
-import type { MarkdownNode } from "@/components/custom/node/Markdown";
+import type { CustomNodes as Node } from "@/types/flow";
 
-type Node = MarkdownNode;
 
 export const pageAtom = atomFamily((id: string) => pageLocalAtom(id));
 
@@ -34,53 +33,4 @@ export const edgesAtom = atomFamily((id: string) =>
       });
     }
   )
-);
-
-export const selectedNodeIdAtom = atom<string | null>(null);
-
-export const selectedNodeAtom = atomFamily((id: string) =>
-  atom((get) => {
-    const page = get(pageAtom(id));
-    const selectedNodeId = get(selectedNodeIdAtom);
-
-    if (!selectedNodeId) {
-      return null;
-    }
-
-    const targetNode = page.nodes.find((node) => node.id === selectedNodeId);
-
-    if (!targetNode) {
-      return null;
-    }
-
-    return targetNode;
-  })
-);
-
-export const beforeAndAfterNodeAtom = atomFamily((id: string) =>
-  atom((get) => {
-    const page = get(pageAtom(id));
-    const selectedNodeId = get(selectedNodeIdAtom);
-
-    const result: {
-      before: Node | null;
-      after: Node | null;
-    } = { before: null, after: null };
-
-    if (!selectedNodeId) {
-      return result;
-    }
-
-    const index = page.nodes.findIndex((node) => node.id === selectedNodeId);
-
-    if (index > 0) {
-      result.before = page.nodes[index - 1];
-    }
-
-    if (page.nodes.length - 1 > index) {
-      result.after = page.nodes[index + 1];
-    }
-
-    return result;
-  })
 );

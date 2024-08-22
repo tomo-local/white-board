@@ -13,6 +13,7 @@ type Props = {
   displayPosition: Position;
   onClick: (
     type: CustomNodeTypes,
+    id: string,
     position: Position,
     positionXY: XYPosition
   ) => void;
@@ -47,6 +48,7 @@ export default function AddNodeToolbar({
   const onAddNode = () => {
     onClick(
       type,
+      id,
       displayPosition,
       calNextPosition(positionAbsoluteX, positionAbsoluteY, displayPosition)
     );

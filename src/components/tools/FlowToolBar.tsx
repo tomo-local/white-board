@@ -11,11 +11,11 @@ export default function FlowToolBar() {
   return (
     <Panel
       position="top-left"
-      className="bg-neutral-100 dark:bg-neutral-700 rounded-md  hover:ring-2 ring-neutral-400 dark:ring-neutral-500"
+      className="bg-neutral-100 dark:bg-neutral-700 rounded-md ring-1 hover:ring-2 ring-neutral-400 dark:ring-neutral-500"
     >
       <main className="flex flex-grow  px-1 py-1 w-full text-neutral-500 dark:text-neutral-100 divide-x divide-neutral-400 dark:divide-neutral-500 space-x-2">
         <div className="flex flex-grow items-center space-x-3">
-          <div className="flex-1 min-w-36 px-2">タイトル</div>
+          <div className="flex-1 min-w-36 px-2 select-none">タイトル</div>
           <div>
             <button
               type="button"

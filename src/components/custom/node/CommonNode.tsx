@@ -8,7 +8,7 @@ import PointBadge from "@/components/common/badge/PointBadge";
 
 import { useNodeControl } from "@/hooks/useNodeControl";
 import type { CustomNodeTypes } from "@/jotai/flow/panel";
-import type { MarkdownNode } from "@/components/custom/node/Markdown";
+import type { CustomNodes } from "@/types/flow";
 
 type CommonNodeProps = {
   type: CustomNodeTypes;
@@ -17,13 +17,12 @@ type CommonNodeProps = {
   isConnectable?: boolean;
   children: React.ReactNode;
   onDoubleClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-} & NodeProps<MarkdownNode>;
+} & NodeProps<CustomNodes>;
 
 export default function Node(props: CommonNodeProps) {
   const {
     id,
     type,
-    selected,
     dragging,
     children,
     isConnectable,
@@ -31,7 +30,7 @@ export default function Node(props: CommonNodeProps) {
     editing,
     onDoubleClick,
   } = props;
-  const { addNodeWithEdge } = useNodeControl(props);
+  const { addNodeWithEdge } = useNodeControl();
 
   return (
     <main
@@ -44,7 +43,7 @@ export default function Node(props: CommonNodeProps) {
         "hover:border-3 hover:border-neutral-500 dark:hover:border-neutral-500",
         dragging
           ? "animate-grip shadow-2xl shadow-neutral-500 dark:shadow-neutral-600 cursor-grabbing"
-          : "cursor-pointer",
+          : "cursor-grab",
         className
       )}
       onDoubleClick={onDoubleClick}
