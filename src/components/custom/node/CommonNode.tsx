@@ -35,7 +35,7 @@ export default function Node(props: CommonNodeProps) {
     <main
       id={`note-type-${type}-${id}`}
       className={clsx(
-        "relative group",
+        "group",
         "custom-drag-handle",
         "bg-neutral-100 dark:bg-neutral-600",
         "border-2 border-neutral-500 dark:border-neutral-700 border-inherit",

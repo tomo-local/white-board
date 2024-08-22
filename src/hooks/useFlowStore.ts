@@ -14,11 +14,52 @@ import { useAtomCallback } from "jotai/utils";
 
 import { nodesAtom, edgesAtom } from "@/jotai/flow/page";
 import { v4 as uuid } from "uuid";
-import type { CustomNodes as Node, CustomNodeTypes } from "@/types/flow";
+import type {
+  CustomNodes as Node,
+  MarkdownNode,
+  MemoNode,
+  CustomNodeTypes,
+} from "@/types/flow";
 
 type Position = {
   x: number;
   y: number;
+};
+
+type InputNode = {
+  type: CustomNodeTypes;
+  position: Position;
+  data?: Node["data"];
+};
+
+const createNode = ({ type, position, data }: InputNode) => {
+  switch (type) {
+    case "markdown":
+      return {
+        id: uuid(),
+        type,
+        dragHandle: ".custom-drag-handle",
+        position,
+        data: {
+          ...data,
+          label: "カード",
+          context: "# Title",
+        },
+      } as MarkdownNode;
+    case "memo":
+      return {
+        id: uuid(),
+        type,
+        dragHandle: ".custom-drag-handle",
+        position,
+        width: 180,
+        height: 180,
+        data: {
+          ...data,
+          context: null,
+        },
+      } as MemoNode;
+  }
 };
 
 export const useFlowStore = () => {
@@ -57,21 +98,10 @@ export const useFlowStore = () => {
         ) => {
           const nodes = get(nodesAtom(id));
           const { x, y } = position;
-          const newNode: Node = {
-            id: optionId || uuid(),
-            type: "markdown",
-            dragHandle: ".custom-drag-handle",
-            position: {
-              x: x,
-              y: y,
-            },
-            data: {
-              label: `Node ${nodes.length}`,
-              context: "Sample",
-              created_at: new Date().toISOString(),
-              update_at: new Date().toISOString(),
-            },
-          };
+          const newNode = createNode({
+            type,
+            position: { x, y },
+          });
 
           const newNodes = [...nodes, newNode];
 
