@@ -15,13 +15,13 @@ import EditableText from "@/components/common/input/EditableText";
 import MarkdownIcon from "@/components/common/icons/MarkdownIcon";
 
 import { useNodeControl } from "@/hooks/useNodeControl";
-import { selectNodeIdAtom } from "@/jotai/flow/page";
 import type { MarkdownNode as Node } from "@/types/flow";
+import { useNodeDetailsControl } from "@/hooks/useNodeDetailsControl";
 
 export default function MarkdownNode(props: NodeProps<Node>) {
-  const { node, onChange, onSave } = useNodeControl(props);
-  const [selectId, select] = useAtom(selectNodeIdAtom);
-
+  const { onSave } = useNodeControl();
+  const { select, selectId } = useNodeDetailsControl();
+  const [node, setNode] = useState(props);
   const [editable, setEditable] = useState(false);
 
   useEffect(() => {
@@ -31,11 +31,17 @@ export default function MarkdownNode(props: NodeProps<Node>) {
   }, [props.selected]);
 
   const handleChangeLabel = (e: ChangeEvent<HTMLInputElement>) => {
-    onChange({ ...node, data: { ...node.data, label: e.target.value } });
+    setNode({
+      ...node,
+      data: {
+        ...node.data,
+        label: e.target.value,
+      },
+    });
   };
 
   const handleSaveLabel = () => {
-    onSave();
+    onSave(node);
     setEditable(false);
   };
 
@@ -57,7 +63,7 @@ export default function MarkdownNode(props: NodeProps<Node>) {
             )}
             onClick={() => {
               if (editable) {
-                onSave();
+                onSave(node);
               }
               setEditable(!editable);
             }}
