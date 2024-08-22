@@ -8,7 +8,7 @@ export default function NodeList() {
   return (
     <div
       className={clsx(
-        "text-neutral-600 dark:text-neutral-200 flex flex-col border-l border-neutral-300",
+        "text-neutral-500 dark:text-neutral-200 flex flex-col border-l border-neutral-300",
         "bg-neutral-100 dark:bg-neutral-800",
         "dark:border-neutral-500 max-h-[calc(100vh-5rem)] overflow-y-scroll"
       )}

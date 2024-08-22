@@ -32,7 +32,7 @@ export default function MarkdownDetails({
   return (
     <>
       <DetailsHeder onDelete={handleDelete} />
-      <div className="flex flex-col px-4 py-1">
+      <div className="flex flex-col px-4 py-1 text-neutral-500 dark:text-neutral-200">
         <div className="flex flex-col flex-none h-44">
           <div className="text-3xl">
             <input

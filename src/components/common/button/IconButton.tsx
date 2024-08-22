@@ -12,7 +12,10 @@ export default function IconButton(props: IconButtonProps) {
   return (
     <Button
       {...props}
-      className={clsx("p-1 rounded-md group/button relative", className)}
+      className={clsx(
+        "p-1 rounded-md group/button relative text-neutral-500 dark:text-neutral-200",
+        className
+      )}
     >
       {children}
     </Button>
