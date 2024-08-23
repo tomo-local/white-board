@@ -58,7 +58,9 @@ export default function MarkdownNode(props: NodeProps<Node>) {
           <IconButton
             type="button"
             className={clsx(
-              "bg-neutral-200 dark:bg-neutral-700 rounded-l rounded-r-none hover:bg-neutral-300 dark:hover:bg-slate-500"
+              "bg-neutral-200 dark:bg-neutral-700 rounded-l rounded-r-none hover:bg-neutral-300 dark:hover:bg-neutral-500",
+              props.selected && "visible",
+              editable && "bg-neutral-300 dark:bg-neutral-400"
             )}
             onClick={() => {
               if (editable) {
@@ -72,7 +74,9 @@ export default function MarkdownNode(props: NodeProps<Node>) {
           <IconButton
             type="button"
             className={clsx(
-              "bg-neutral-200 dark:bg-neutral-700 rounded-r rounded-l-none hover:bg-neutral-300 dark:hover:bg-slate-500"
+              "bg-neutral-200 dark:bg-neutral-700 rounded-r rounded-l-none hover:bg-neutral-300 dark:hover:bg-neutral-500",
+              props.selected && "visible",
+              selectId === node.id && "bg-neutral-300 dark:bg-neutral-400"
             )}
             onClick={() => select(node.id)}
           >
@@ -85,7 +89,7 @@ export default function MarkdownNode(props: NodeProps<Node>) {
             id={`${node.type}-header-${node.id}`}
             className="flex px-2 flex-none"
           >
-            <MarkdownIcon className="w-5 h-5 mt-1 dark:fill-neutral-100 fill-neutral-500" />
+            <MarkdownIcon className="size-5 mt-1 dark:fill-neutral-100 fill-neutral-500" />
           </div>
           <div
             id={`${node.type}-main-${node.id}`}
