@@ -5,16 +5,15 @@ import IconButton from "@/components/common/button/IconButton";
 import { SquaresPlusIcon } from "@heroicons/react/24/solid";
 
 type NodeItemProps = {
-  key: string;
   node: CustomNodes;
 };
 
-export default function NodeListItem({ key, node }: NodeItemProps) {
+export default function NodeListItem({ node }: NodeItemProps) {
   const { select, selectId } = useNodeDetailsControl();
 
   return (
     <div
-      key={key}
+      key={node.id}
       className={clsx(
         "border-2 rounded-md dark:border-neutral-600 mx-3 dark:bg-neutral-700",
         "hover:border-2 dark:hover:border-neutral-400",
@@ -29,12 +28,15 @@ export default function NodeListItem({ key, node }: NodeItemProps) {
             <div className="text-xs flex-1">
               TYPE: {node.type?.toUpperCase()}
             </div>
-            <IconButton
-              className="hover:bg-neutral-400 dark:hover:bg-neutral-500"
-              onClick={() => select(node.id)}
-            >
-              <SquaresPlusIcon className="w-4 h-4" />
-            </IconButton>
+
+            {node.type === "markdown" && (
+              <IconButton
+                className="hover:bg-neutral-400 dark:hover:bg-neutral-500"
+                onClick={() => select(node.id)}
+              >
+                <SquaresPlusIcon className="w-4 h-4" />
+              </IconButton>
+            )}
           </div>
           <div id="content">
             {node.type === "markdown" ? node.data.label : ""}

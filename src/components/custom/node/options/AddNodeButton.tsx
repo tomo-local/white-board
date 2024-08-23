@@ -6,7 +6,7 @@ import {
 } from "@xyflow/react";
 import { ArrowDownOnSquareIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
-import type { CustomNodeTypes } from "@/jotai/flow/panel";
+import type { CustomNodeTypes } from "@/types/flow";
 
 type Props = {
   type: CustomNodeTypes;

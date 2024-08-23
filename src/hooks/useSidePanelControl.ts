@@ -2,7 +2,8 @@ import type { MouseEvent } from "react";
 import { useAtom } from "jotai";
 import { useReactFlow } from "@xyflow/react";
 
-import { sidePanelAtom, type CustomNodeTypes } from "@/jotai/flow/panel";
+import { sidePanelAtom } from "@/jotai/flow/panel";
+import type { CustomNodeTypes } from "@/types/flow";
 
 type Position = {
   x: number;

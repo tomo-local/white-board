@@ -7,8 +7,7 @@ import AddNodeToolbar from "@/components/custom/node/options/AddNodeButton";
 import PointBadge from "@/components/common/badge/PointBadge";
 
 import { useNodeControl } from "@/hooks/useNodeControl";
-import type { CustomNodeTypes } from "@/jotai/flow/panel";
-import type { CustomNodes } from "@/types/flow";
+import type { CustomNodes, CustomNodeTypes } from "@/types/flow";
 
 type CommonNodeProps = {
   type: CustomNodeTypes;
@@ -36,7 +35,7 @@ export default function Node(props: CommonNodeProps) {
     <main
       id={`note-type-${type}-${id}`}
       className={clsx(
-        "relative group",
+        "group",
         "custom-drag-handle",
         "bg-neutral-100 dark:bg-neutral-600",
         "border-2 border-neutral-500 dark:border-neutral-700 border-inherit",

@@ -56,7 +56,9 @@ export default function FlowSideView() {
               ))}
             </TabList>
             <TabPanels>
-              <TabPanel as={NodeList} />
+              <TabPanel>
+                <NodeList />
+              </TabPanel>
               <TabPanel>Content 2</TabPanel>
             </TabPanels>
           </TabGroup>

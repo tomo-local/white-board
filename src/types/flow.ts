@@ -1,10 +1,10 @@
 import type { Node, Edge } from "@xyflow/react";
 
-export type CustomNodes = MarkdownNode | DocumentNode;
+export type CustomNodes = MarkdownNode | MemoNode;
 
 export type CustomEdges = Edge;
 
-export type CustomNodeTypes = "markdown" | "document";
+export type CustomNodeTypes = "markdown" | "memo";
 
 export interface MarkdownNode extends Node {
   data: {
@@ -16,13 +16,13 @@ export interface MarkdownNode extends Node {
   type: "markdown";
 }
 
-export interface DocumentNode extends Node {
+export interface MemoNode extends Node {
   data: {
     context: string | null;
     created_at: string;
     update_at: string;
   };
-  type: "document";
+  type: "memo";
 }
 
 export type PageListItem = {

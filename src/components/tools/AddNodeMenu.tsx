@@ -8,7 +8,7 @@ import clsx from "clsx";
 
 import MarkdownIcon from "@/components/common/icons/MarkdownIcon";
 import { useFlowStore } from "@/hooks/useFlowStore";
-import type { CustomNodeTypes } from "@/jotai/flow/panel";
+import type { CustomNodeTypes } from "@/types/flow";
 
 export default function AddNodeMenu() {
   const { addNode } = useFlowStore();
@@ -58,7 +58,7 @@ export default function AddNodeMenu() {
               "text-neutral-500 dark:text-neutral-200",
               "p-2 rounded-md hover:bg-neutral-300 dark:hover:bg-neutral-500"
             )}
-            onClick={() => handleAddNode("document")}
+            onClick={() => handleAddNode("memo")}
           >
             <DocumentIcon className="w-5 h-5" />
           </button>
