@@ -117,12 +117,12 @@ export default function MarkdownNode(props: NodeProps<MemoNode>) {
               }}
               className={clsx(
                 "w-full h-full text-neutral-700 dark:text-neutral-300 bg-inherit break-words resize-none outline-none",
-                "bg-neutral-700 py-1 px-2 rounded-md",
+                "bg-neutral-200 dark:bg-neutral-700 py-1 px-2 rounded-md",
                 "focus:ring-2 ring-neutral-500 dark:ring-neutral-400"
               )}
             />
           ) : (
-            <div className="px-2 w-full h-full text-neutral-700 dark:text-neutral-300 break-words overflow-hidden">
+            <div className="px-2 w-full h-full text-neutral-700 dark:text-neutral-300 break-words whitespace-pre-wrap overflow-hidden">
               {node.data.context}
             </div>
           )}
