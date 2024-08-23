@@ -5,16 +5,15 @@ import IconButton from "@/components/common/button/IconButton";
 import { SquaresPlusIcon } from "@heroicons/react/24/solid";
 
 type NodeItemProps = {
-  key: string;
   node: CustomNodes;
 };
 
-export default function NodeListItem({ key, node }: NodeItemProps) {
+export default function NodeListItem({ node }: NodeItemProps) {
   const { select, selectId } = useNodeDetailsControl();
 
   return (
     <div
-      key={key}
+      key={node.id}
       className={clsx(
         "border-2 rounded-md dark:border-neutral-600 mx-3 dark:bg-neutral-700",
         "hover:border-2 dark:hover:border-neutral-400",

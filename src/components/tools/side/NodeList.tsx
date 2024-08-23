@@ -5,6 +5,7 @@ import NodeItem from "@/components/tools/side/NodeItem";
 
 export default function NodeList() {
   const { nodes } = useFlowStore();
+
   return (
     <div
       className={clsx(
@@ -15,9 +16,14 @@ export default function NodeList() {
     >
       <div className="relative py-2  scroll-smooth h-full">
         <div className="relative space-y-2 w-full full">
-          {nodes?.map((node) => (
-            <NodeItem node={node} key={node.id} />
-          ))}
+          {nodes?.map(
+            (node) =>
+              node && (
+                <div key={node.id}>
+                  <NodeItem node={node} />
+                </div>
+              )
+          )}
         </div>
       </div>
     </div>
