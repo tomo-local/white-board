@@ -29,12 +29,15 @@ export default function NodeListItem({ key, node }: NodeItemProps) {
             <div className="text-xs flex-1">
               TYPE: {node.type?.toUpperCase()}
             </div>
-            <IconButton
-              className="hover:bg-neutral-400 dark:hover:bg-neutral-500"
-              onClick={() => select(node.id)}
-            >
-              <SquaresPlusIcon className="w-4 h-4" />
-            </IconButton>
+
+            {node.type === "markdown" && (
+              <IconButton
+                className="hover:bg-neutral-400 dark:hover:bg-neutral-500"
+                onClick={() => select(node.id)}
+              >
+                <SquaresPlusIcon className="w-4 h-4" />
+              </IconButton>
+            )}
           </div>
           <div id="content">
             {node.type === "markdown" ? node.data.label : ""}
