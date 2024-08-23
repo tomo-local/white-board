@@ -40,14 +40,16 @@ export const prevAndNextNodeAtom = atomFamily((id: string) =>
       return result;
     }
 
-    const index = page.nodes.findIndex((node) => node.id === targetId);
+    const nodes = page.nodes.filter((node) => node.type === "markdown");
+
+    const index = nodes.findIndex((node) => node.id === targetId);
 
     if (index > 0) {
-      result.previous = page.nodes[index - 1];
+      result.previous = nodes[index - 1];
     }
 
     if (page.nodes.length - 1 > index) {
-      result.next = page.nodes[index + 1];
+      result.next = nodes[index + 1];
     }
 
     return result;
