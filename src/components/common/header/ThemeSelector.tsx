@@ -7,7 +7,7 @@ import clsx from "clsx";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import IconButton from "@/components/common/button/IconButton";
+import { COMMON_CLASS } from "@/components/common/button/IconButton";
 
 export default function ThemeSelector() {
   const [mounted, setMounted] = useState(false);
@@ -27,21 +27,20 @@ export default function ThemeSelector() {
 
   return (
     <Menu>
-      <MenuButton>
-        <IconButton
-          aria-label="カラーテーマを選択する"
-          type="button"
-          className={clsx(
-            "p-1.5 rounded-md",
-            "dark:hover:bg-neutral-700 hover:bg-neutral-200"
-          )}
-        >
-          {resolvedTheme === "light" ? (
-            <SunIcon className="size-5" />
-          ) : (
-            <MoonIcon className="size-5" />
-          )}
-        </IconButton>
+      <MenuButton
+        aria-label="カラーテーマを選択する"
+        type="button"
+        className={clsx(
+          COMMON_CLASS,
+          "p-1.5 rounded-md",
+          "dark:hover:bg-neutral-700 hover:bg-neutral-200"
+        )}
+      >
+        {resolvedTheme === "light" ? (
+          <SunIcon className="size-5" />
+        ) : (
+          <MoonIcon className="size-5" />
+        )}
       </MenuButton>
       <MenuItems
         as="div"
