@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="flex flex-col h-screen w-screen bg-neutral-50 dark:bg-neutral-900">
+          <div className="flex flex-col h-screen w-screen bg-neutral-50 dark:bg-neutral-900 fixed">
             <Header className="flex-none" />
             <div className="flex-grow">{children}</div>
           </div>
