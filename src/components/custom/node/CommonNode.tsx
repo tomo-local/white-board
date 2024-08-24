@@ -3,7 +3,7 @@ import { Position, type NodeProps } from "@xyflow/react";
 import { clsx } from "clsx";
 
 import CustomHandle from "@/components/custom/node/options/Handle";
-import AddNodeToolbar from "@/components/custom/node/options/AddNodeButton";
+import AddNodeButton from "@/components/custom/node/options/AddNodeButton";
 import PointBadge from "@/components/common/badge/PointBadge";
 
 import { useNodeControl } from "@/hooks/useNodeControl";
@@ -27,6 +27,7 @@ export default function Node(props: CommonNodeProps) {
     isConnectable,
     className,
     editing,
+    selected,
     onDoubleClick,
   } = props;
   const { addNodeWithEdge } = useNodeControl();
@@ -54,33 +55,38 @@ export default function Node(props: CommonNodeProps) {
       <main className="h-full w-full">{children}</main>
 
       {isConnectable && (
-        <>
+        <div
+          className={clsx(
+            selected ? "opacity-100" : "opacity-0",
+            "group-hover:opacity-100"
+          )}
+        >
           <CustomHandle type="source" position={Position.Top} id="top" />
           <CustomHandle type="source" position={Position.Right} id="right" />
           <CustomHandle type="target" position={Position.Left} id="left" />
           <CustomHandle type="target" position={Position.Bottom} id="bottom" />
-        </>
+        </div>
       )}
 
       {isConnectable && (
         <>
-          <AddNodeToolbar
+          <AddNodeButton
             {...props}
             type={type}
             displayPosition={Position.Top}
             onClick={addNodeWithEdge}
           />
-          <AddNodeToolbar
+          <AddNodeButton
             {...props}
             displayPosition={Position.Right}
             onClick={addNodeWithEdge}
           />
-          <AddNodeToolbar
+          <AddNodeButton
             {...props}
             displayPosition={Position.Left}
             onClick={addNodeWithEdge}
           />
-          <AddNodeToolbar
+          <AddNodeButton
             {...props}
             displayPosition={Position.Bottom}
             onClick={addNodeWithEdge}

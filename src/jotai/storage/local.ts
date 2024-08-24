@@ -36,8 +36,8 @@ export const initialNodes: Node[] = [
     type: "markdown",
     dragHandle: ".custom-drag-handle",
     data: {
-      label: "Node 0",
-      context: "Sample",
+      label: "カード",
+      context: "# カード",
       created_at: new Date().toISOString(),
       update_at: new Date().toISOString(),
     },
@@ -50,7 +50,7 @@ export const initialEdges: Edge[] = [];
 export const pageLocalAtom = (id: string) =>
   atomWithStorage(
     `wb-page-${id}`,
-    defaultPage({ id, title: "New Page" }),
+    defaultPage({ id, title: "新しいページ" }),
     undefined,
     {
       getOnInit: true,
