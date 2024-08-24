@@ -17,6 +17,8 @@ type InputNode = {
   nodes?: CustomNodes[];
 };
 
+const defaultMemoSize = 180;
+
 const Node = ({
   type,
   position,
@@ -37,11 +39,7 @@ const Node = ({
       return { ...common } as MarkdownNode;
 
     case "memo":
-      return {
-        ...common,
-        width: 180,
-        height: 180,
-      } as MemoNode;
+      return { ...common } as MemoNode;
 
     case "table":
       return { ...common } as TableNode;
@@ -62,18 +60,16 @@ export const createNode = ({ type, position, data, nodes }: InputNode) => {
 
   switch (type) {
     case "markdown":
-      return {
-        ...Node({
-          type,
-          position,
-          data: {
-            label: crateLabel(type, nodes),
-            context: "# Markdown",
-            ...date,
-            ...data,
-          },
-        }),
-      } as MarkdownNode;
+      return Node({
+        type,
+        position,
+        data: {
+          label: crateLabel(type, nodes),
+          context: "# Markdown",
+          ...date,
+          ...data,
+        },
+      }) as MarkdownNode;
     case "memo":
       return {
         ...Node({
@@ -85,25 +81,25 @@ export const createNode = ({ type, position, data, nodes }: InputNode) => {
             ...data,
           },
         }),
+        width: defaultMemoSize,
+        height: defaultMemoSize,
       } as MemoNode;
 
     case "table":
-      return {
-        ...Node({
-          type,
-          position,
-          data: {
-            rowColumns: ["row1", "row2"],
-            lineColumns: ["line1", "line2"],
-            table: [
-              { row1: "line1", row2: "line2" },
-              { row1: "line1", row2: "line2" },
-            ],
-            ...date,
-            ...data,
-          },
-        }),
-      } as TableNode;
+      return Node({
+        type,
+        position,
+        data: {
+          rowColumns: ["row1", "row2"],
+          lineColumns: ["line1", "line2"],
+          table: [
+            { row1: "line1", row2: "line2" },
+            { row1: "line1", row2: "line2" },
+          ],
+          ...date,
+          ...data,
+        },
+      }) as TableNode;
 
     default:
       return {
@@ -121,40 +117,34 @@ export const updateNodeData = (
   node: CustomNodes,
   data: Record<string, unknown>
 ): CustomNodes => {
-  switch (node.type) {
+  switch (node?.type) {
     case "markdown":
-      return {
-        ...Node({
-          ...node,
-          data: {
-            ...node.data,
-            ...data,
-            update_at: new Date().toISOString(),
-          },
-        }),
-      } as MarkdownNode;
+      return Node({
+        ...node,
+        data: {
+          ...node.data,
+          ...data,
+          update_at: new Date().toISOString(),
+        },
+      }) as MarkdownNode;
     case "memo":
-      return {
-        ...Node({
-          ...node,
-          data: {
-            ...node.data,
-            ...data,
-            update_at: new Date().toISOString(),
-          },
-        }),
-      } as MemoNode;
+      return Node({
+        ...node,
+        data: {
+          ...node.data,
+          ...data,
+          update_at: new Date().toISOString(),
+        },
+      }) as MemoNode;
     case "table":
-      return {
-        ...Node({
-          ...node,
-          data: {
-            ...node.data,
-            ...data,
-            update_at: new Date().toISOString(),
-          },
-        }),
-      } as TableNode;
+      return Node({
+        ...node,
+        data: {
+          ...node.data,
+          ...data,
+          update_at: new Date().toISOString(),
+        },
+      }) as TableNode;
     default:
       return node;
   }
