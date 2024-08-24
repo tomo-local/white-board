@@ -1,5 +1,5 @@
 "use client";
-import { type ChangeEvent, useEffect, useState } from "react";
+import { type ChangeEvent, use, useEffect, useState } from "react";
 import type { NodeProps } from "@xyflow/react";
 import { NodeResizer } from "@xyflow/react";
 import {
@@ -15,7 +15,6 @@ import IconButton from "@/components/common/button/IconButton";
 import { useNodeControl } from "@/hooks/useNodeControl";
 import type { MemoNode } from "@/types/flow";
 
-
 export default function MarkdownNode(props: NodeProps<MemoNode>) {
   const { onSave } = useNodeControl();
   const [node, setNode] = useState(props);
@@ -30,7 +29,7 @@ export default function MarkdownNode(props: NodeProps<MemoNode>) {
 
   const handleChangeContext = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setNode({
-      ...node,
+      ...props,
       data: {
         ...node.data,
         context: e.target.value,
@@ -39,10 +38,9 @@ export default function MarkdownNode(props: NodeProps<MemoNode>) {
   };
 
   const handleSaveContext = (value: string) => {
-    // if (value !== node.data.context) {
-    console.log("save context", value);
-    onSave(node);
-    // }
+    if (value !== node.data.context) {
+      onSave(node);
+    }
     setEditable(false);
   };
 
