@@ -7,6 +7,7 @@ import { useSidePanelControl } from "@/hooks/useSidePanelControl";
 
 import MarkdownNode from "@/components/custom/node/Markdown";
 import MemoNode from "@/components/custom/node/Memo";
+import TableNode from "@/components/custom/node/Table";
 import SidePanel from "@/components/tools/FlowToolBar";
 
 import "@xyflow/react/dist/style.css";
@@ -14,6 +15,7 @@ import "@xyflow/react/dist/style.css";
 const nodeTypes: NodeTypes = {
   markdown: MarkdownNode,
   memo: MemoNode,
+  table: TableNode,
 };
 
 export default function Flow() {
