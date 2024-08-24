@@ -1,66 +1,67 @@
 "use client";
 import { type ChangeEvent, useEffect, useState } from "react";
 import type { NodeProps } from "@xyflow/react";
-import { NodeResizer } from "@xyflow/react";
 import { clsx } from "clsx";
 
 import CommonNode from "@/components/custom/node/CommonNode";
 
-import { useNodeControl } from "@/hooks/useNodeControl";
+// import { useNodeControl } from "@/hooks/useNodeControl";
 import type { TableNode } from "@/types/flow";
-import {
-  ArrowsPointingOutIcon,
-  DocumentIcon,
-  PencilSquareIcon,
-} from "@heroicons/react/24/outline";
-import IconButton from "@/components/common/button/IconButton";
+import { TableCellsIcon } from "@heroicons/react/24/outline";
 
 export default function MarkdownNode(props: NodeProps<TableNode>) {
-  const { onSave } = useNodeControl();
+  // const { onSave } = useNodeControl();
   const [node, setNode] = useState(props);
   const [resizable, setResizable] = useState(false);
-  const [editable, setEditable] = useState(false);
+  // const [editable, setEditable] = useState(false);
 
-  useEffect(() => {
-    if (!props.selected) {
-      setEditable(false);
-    }
-  }, [props.selected]);
-
-  const handleSaveContext = (value: string) => {
-    // if (value !== node.data.context) {
-    console.log("save context", value);
-    onSave(node);
-    // }
-    setEditable(false);
-  };
+  // useEffect(() => {
+  //   if (!props.selected) {
+  //     setEditable(false);
+  //   }
+  // }, [props.selected]);
 
   return (
     <CommonNode
       {...props}
       type="memo"
-      className="w-full h-full"
+      className="w-full h-full rounded-md"
       isConnectable={false}
       onDoubleClick={() => {
         setResizable(!resizable);
       }}
     >
       <>
-        <NodeResizer
-          handleClassName={clsx("p-1")}
-          lineClassName={clsx("p-1")}
-          isVisible={resizable}
-          minHeight={100}
-          minWidth={180}
-        />
-
-
         <div className="absolute top-2 left-2">
-          <DocumentIcon className="size-4 dark:text-neutral-100 text-neutral-600" />
+          <TableCellsIcon className="size-4 dark:text-neutral-100 text-neutral-600" />
         </div>
 
-        <div className="w-full h-full px-2 pt-7 pb-2">
-          {}
+        <div className="w-full h-full px-2 py-2">
+          <table className="table-auto w-full h-full border-collapse min-w-96">
+            <thead>
+              <tr>
+                {node.data.rowColumns.map((header) => (
+                  <th key={header} className="border-b p-2 pl-8 pt-0 py-2">
+                    {header}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {node.data.table.map((row) => (
+                <tr key={`row_${Math.random()}`}>
+                  {Object.values(row).map((cell) => (
+                    <td
+                      key={`cell_${Math.random()}`}
+                      className="border-b p-2 pl-8"
+                    >
+                      {cell}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </>
     </CommonNode>
