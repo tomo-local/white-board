@@ -1,7 +1,9 @@
 import { useFlowStore } from "@/hooks/useFlowStore";
 import clsx from "clsx";
 
-import NodeItem from "@/components/tools/side/NodeItem";
+import MarkdownItem from "@/components/tools/side/MarkdownItem";
+import MemoItem from "@/components/tools/side/MemoItem";
+import TableItem from "@/components/tools/side/TableItem";
 
 export default function NodeList() {
   const { nodes } = useFlowStore();
@@ -16,14 +18,13 @@ export default function NodeList() {
     >
       <div className="relative py-2  scroll-smooth h-full">
         <div className="relative space-y-2 w-full full">
-          {nodes?.map(
-            (node) =>
-              node && (
-                <div key={node.id}>
-                  <NodeItem node={node} />
-                </div>
-              )
-          )}
+          {nodes?.map((node) => (
+            <div key={node.id}>
+              {node.type === "markdown" && <MarkdownItem node={node} />}
+              {node.type === "memo" && <MemoItem node={node} />}
+              {node.type === "table" && <TableItem node={node} />}
+            </div>
+          ))}
         </div>
       </div>
     </div>
