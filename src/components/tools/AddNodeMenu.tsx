@@ -3,7 +3,6 @@ import {
   ChevronDownIcon,
   DocumentIcon,
   PlusIcon,
-  RectangleGroupIcon,
   TableCellsIcon,
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
@@ -76,19 +75,6 @@ export default function AddNodeMenu() {
             onClick={() => handleAddNode("table")}
           >
             <TableCellsIcon className="size-5" />
-          </button>
-        </MenuItem>
-        <MenuItem>
-          <button
-            type="button"
-            className={clsx(
-              "flex items-center justify-center",
-              "text-neutral-500 dark:text-neutral-200",
-              "p-2 rounded-md hover:bg-neutral-300 dark:hover:bg-neutral-500"
-            )}
-            // onClick={() => handleAddNode("group")}
-          >
-            <RectangleGroupIcon className="size-5" />
           </button>
         </MenuItem>
       </MenuItems>
