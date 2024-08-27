@@ -1,9 +1,11 @@
 import { Position, type XYPosition, type NodeProps } from "@xyflow/react";
 import { ArrowDownOnSquareIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
-import type { CustomNodeTypes } from "@/types/flow";
 
-type Props = {
+import type { CustomNodeTypes } from "@/types/flow";
+import { calNextNodePosition } from "@/utils/flow";
+
+type AddNodeButtonProps = {
   type: CustomNodeTypes;
   displayPosition: Position;
   onClick: (
@@ -14,38 +16,25 @@ type Props = {
   ) => void;
 } & NodeProps;
 
-const calNextPosition = (x: number, y: number, type: Position) => {
-  const plusX = 300;
-  const plusY = 200;
-  switch (type) {
-    case Position.Top:
-      return { x: x, y: y - plusY };
-    case Position.Right:
-      return { x: x + plusX, y: y };
-    case Position.Left:
-      return { x: x - plusX, y: y };
-    case Position.Bottom:
-      return { x: x, y: y + plusY };
-    default:
-      return { x: x, y: y };
-  }
-};
+export default function AddNodeButton(props: AddNodeButtonProps) {
+  const {
+    id,
+    type,
+    selected,
+    displayPosition,
+    onClick,
+    positionAbsoluteX: x,
+    positionAbsoluteY: y,
+    width,
+    height,
+  } = props;
 
-export default function AddNodeButton({
-  id,
-  type,
-  selected,
-  displayPosition,
-  onClick,
-  positionAbsoluteX,
-  positionAbsoluteY,
-}: Props) {
   const onAddNode = () => {
     onClick(
       type,
       id,
       displayPosition,
-      calNextPosition(positionAbsoluteX, positionAbsoluteY, displayPosition)
+      calNextNodePosition(displayPosition, { x, y }, { width, height })
     );
   };
 

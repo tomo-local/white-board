@@ -90,11 +90,32 @@ export const createNode = ({ type, position, data, nodes }: InputNode) => {
         type,
         position,
         data: {
-          rowColumns: ["row1", "row2"],
-          lineColumns: ["line1", "line2"],
+          label: crateLabel(type, nodes),
+          rowColumns: [
+            {
+              id: "row_1",
+              name: "row1",
+              type: "string",
+            },
+            {
+              id: "row_2",
+              name: "row2",
+              type: "string",
+            },
+          ],
+          lineColumns: [
+            {
+              id: "line_1",
+              name: "line1",
+            },
+            {
+              id: "line_2",
+              name: "line2",
+            },
+          ],
           table: [
-            { row1: "line1", row2: "line2" },
-            { row1: "line1", row2: "line2" },
+            { row_1: "line1", row_2: "line2" },
+            { row_1: "line1", row_2: "line2" },
           ],
           ...date,
           ...data,
@@ -185,5 +206,60 @@ export const buildConnection = (
         target: currentNodeId,
         targetHandle: Position.Bottom,
       };
+  }
+};
+
+type calNodeCenterPositionProps = (
+  x: number,
+  y: number,
+  width: number | undefined,
+  height: number | undefined
+) => XYPosition;
+export const calNodeCenterPosition: calNodeCenterPositionProps = (
+  x,
+  y,
+  width,
+  height
+) => {
+  const newX = !width ? x : x + width / 2;
+  const newY = !height ? y : y + height / 2;
+
+  return {
+    x: newX,
+    y: newY,
+  };
+};
+
+type calNextNodePositionProps = (
+  type: Position,
+  position: XYPosition,
+  size?: {
+    width: number | undefined;
+    height: number | undefined;
+  }
+) => XYPosition;
+
+export const calNextNodePosition: calNextNodePositionProps = (
+  type,
+  position,
+  size
+) => {
+  const { x, y } = position;
+  const { width = 300, height = 200 } = size || {};
+
+  const plusX = width + 150;
+  const plusY = height + 100;
+
+  switch (type) {
+    case Position.Top:
+      return { x: x, y: y - plusY };
+    case Position.Right:
+      return { x: x + plusX, y: y };
+    case Position.Left:
+      return { x: x - plusX, y: y };
+    case Position.Bottom:
+      return { x: x, y: y + plusY };
+    default:
+      return { x: x, y: y };
   }
 };
