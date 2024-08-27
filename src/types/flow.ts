@@ -31,13 +31,25 @@ export interface MemoNode extends Node {
 export interface TableNode extends Node {
   type: "table";
   data: {
-    rowColumns: string[];
-    lineColumns: string[];
-    table: object[];
+    label: string;
+    // MEMO: 将来的には変更予定
+    rowColumns: [CellType];
+    lineColumns: [CellType];
+    table: CellValue[];
     created_at: string;
     update_at: string;
   };
 }
+
+export type CellType = {
+  id: string;
+  name: string;
+  type: "string" | "number" | "boolean" | "date";
+};
+
+export type CellValue = {
+  value: string;
+};
 
 export type PageListItem = {
   id: string;
