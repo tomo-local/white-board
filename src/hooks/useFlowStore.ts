@@ -5,6 +5,7 @@ import {
   addEdge,
   applyEdgeChanges,
   applyNodeChanges,
+  useReactFlow,
   type XYPosition,
   type EdgeChange,
   type NodeChange,
@@ -16,16 +17,34 @@ import { useAtomCallback } from "jotai/utils";
 import { nodesAtom, edgesAtom } from "@/jotai/flow/page";
 import { createNode } from "@/utils/flow";
 import type { CustomNodes as Node, CustomNodeTypes } from "@/types/flow";
+import { calNodeCenterPosition } from "@/utils/flow";
 
 export const useFlowStore = () => {
   const { id }: { id: string } = useParams();
   const nodes = useAtomValue(nodesAtom(id));
   const edges = useAtomValue(edgesAtom(id));
+  const { setCenter, getZoom } = useReactFlow();
+
+  const moveNodeCenterPosition = (node: Node) => {
+    const { measured, position } = node;
+    const { x, y } = calNodeCenterPosition(
+      position.x,
+      position.y,
+      measured?.width,
+      measured?.height
+    );
+
+    setCenter(x, y, {
+      duration: 100,
+      zoom: getZoom(),
+    });
+  };
 
   return {
     id,
     nodes,
     edges,
+    moveNodeCenterPosition,
     onNodesChange: useAtomCallback(
       useCallback(
         (get, set, change: NodeChange<Node>[]) => {
