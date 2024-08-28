@@ -40,7 +40,7 @@ export const prevAndNextNodeAtom = atomFamily((id: string) =>
       return result;
     }
 
-    const nodes = page.nodes.filter((node) => node.type === "markdown");
+    const nodes = page.nodes.filter((node) => node.type !== "memo");
 
     const index = nodes.findIndex((node) => node.id === targetId);
 
