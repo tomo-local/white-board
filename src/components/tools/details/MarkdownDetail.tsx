@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import DetailsHeder from "@/components/tools/details/DetailsHeder";
+import DetailsHeder from "@/components/tools/details/DetailHeder";
 import type { MarkdownNode } from "@/types/flow";
 import { useNodeControl } from "@/hooks/useNodeControl";
 import { useEffect, useState } from "react";
