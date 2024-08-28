@@ -32,14 +32,20 @@ export default function MarkdownNode(props: NodeProps<MemoNode>) {
       ...props,
       data: {
         ...node.data,
-        context: e.target.value,
+        context: e.currentTarget.value,
       },
     });
   };
 
-  const handleSaveContext = (value: string) => {
+  const handleSaveContext = (value: string | null) => {
     if (value !== node.data.context) {
-      onSave(node);
+      onSave({
+        ...node,
+        data: {
+          ...node.data,
+          context: value,
+        },
+      });
     }
     setEditable(false);
   };
@@ -59,6 +65,13 @@ export default function MarkdownNode(props: NodeProps<MemoNode>) {
           handleClassName={clsx("p-1")}
           lineClassName={clsx("p-1")}
           isVisible={resizable}
+          onResize={(_, params) => {
+            setNode({
+              ...props,
+              width: params.width,
+              height: params.height,
+            });
+          }}
           minHeight={100}
           minWidth={180}
         />
@@ -69,7 +82,12 @@ export default function MarkdownNode(props: NodeProps<MemoNode>) {
         >
           <IconButton
             type="button"
-            onClick={() => setEditable(!editable)}
+            onClick={() => {
+              setEditable(!editable);
+              if (editable) {
+                handleSaveContext(node.data.context);
+              }
+            }}
             className={clsx(
               "bg-neutral-200 dark:bg-neutral-700 rounded-l rounded-r-none hover:bg-neutral-300 dark:hover:bg-neutral-500",
               props.selected && "visible",
@@ -101,18 +119,17 @@ export default function MarkdownNode(props: NodeProps<MemoNode>) {
           {editable ? (
             <textarea
               disabled={!editable}
-              value={node.data.context || ""}
+              defaultValue={node?.data?.context || undefined}
               onChange={handleChangeContext}
-              onBlur={(e) => {
-                e.preventDefault();
-                handleSaveContext(e.currentTarget.value);
-              }}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
                   handleSaveContext(e.currentTarget.value);
                   e.currentTarget.blur();
                 }
               }}
+              onBlur={
+                editable && ((e) => handleSaveContext(e.currentTarget.value))
+              }
               className={clsx(
                 "w-full h-full text-neutral-700 dark:text-neutral-300 bg-inherit break-words resize-none outline-none",
                 "bg-neutral-200 dark:bg-neutral-700 py-1 px-2 rounded-md",
