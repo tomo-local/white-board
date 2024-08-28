@@ -11,6 +11,7 @@ import type {
 import { v4 as uuid } from "uuid";
 
 type InputNode = {
+  id?: string;
   type: CustomNodeTypes;
   position: XYPosition;
   data?: Record<string, unknown>;
@@ -20,12 +21,13 @@ type InputNode = {
 const defaultMemoSize = 180;
 
 const Node = ({
+  id = uuid(),
   type,
   position,
   data,
-}: Pick<InputNode, "type" | "position" | "data">) => {
+}: Pick<InputNode, "id" | "type" | "position" | "data">) => {
   const common = {
-    id: uuid(),
+    id,
     type,
     dragHandle: ".custom-drag-handle",
     position,
@@ -91,31 +93,21 @@ export const createNode = ({ type, position, data, nodes }: InputNode) => {
         position,
         data: {
           label: crateLabel(type, nodes),
-          rowColumns: [
+          columns: [
             {
-              id: "row_1",
-              name: "row1",
+              id: "name",
+              label: "名前",
               type: "string",
             },
             {
-              id: "row_2",
-              name: "row2",
+              id: "column_1",
+              label: "値",
               type: "string",
             },
           ],
-          lineColumns: [
-            {
-              id: "line_1",
-              name: "line1",
-            },
-            {
-              id: "line_2",
-              name: "line2",
-            },
-          ],
-          table: [
-            { row_1: "line1", row_2: "line2" },
-            { row_1: "line1", row_2: "line2" },
+          values: [
+            { name: "ID", column_1: "00001" },
+            { name: "名前", column_1: "山田太郎" },
           ],
           ...date,
           ...data,
