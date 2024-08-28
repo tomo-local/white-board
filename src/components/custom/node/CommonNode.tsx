@@ -18,13 +18,6 @@ type CommonNodeProps = {
   onDoubleClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 } & NodeProps<CustomNodes>;
 
-const CustomHandleValue = [
-  { id: "top", position: Position.Top, type: "source" },
-  { id: "right", position: Position.Right, type: "source" },
-  { id: "left", position: Position.Left, type: "target" },
-  { id: "bottom", position: Position.Bottom, type: "target" },
-] as { id: string; position: Position; type: "source" | "target" }[];
-
 export default function Node(props: CommonNodeProps) {
   const {
     id,
@@ -68,16 +61,34 @@ export default function Node(props: CommonNodeProps) {
             "group-hover:opacity-100"
           )}
         >
-          {CustomHandleValue.map((handle) => (
-            <CustomHandle
-              key={handle.id}
-              id={id}
-              type={handle.type}
-              position={handle.position}
-              visible={!selected}
-              className="group-hover:opacity-100"
-            />
-          ))}
+          <CustomHandle
+            id={Position.Top}
+            type="source"
+            position={Position.Top}
+            visible={!selected}
+            className="group-hover:opacity-100"
+          />
+          <CustomHandle
+            id={Position.Right}
+            type="source"
+            position={Position.Right}
+            visible={!selected}
+            className="group-hover:opacity-100"
+          />
+          <CustomHandle
+            id={Position.Left}
+            type="target"
+            position={Position.Left}
+            visible={!selected}
+            className="group-hover:opacity-100"
+          />
+          <CustomHandle
+            id={Position.Bottom}
+            type="target"
+            position={Position.Bottom}
+            visible={!selected}
+            className="group-hover:opacity-100"
+          />
         </div>
       )}
 
