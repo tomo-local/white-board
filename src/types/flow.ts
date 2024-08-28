@@ -33,9 +33,8 @@ export interface TableNode extends Node {
   data: {
     label: string;
     // MEMO: 将来的には変更予定
-    rowColumns: [CellType];
-    lineColumns: [CellType];
-    table: CellValue[];
+    columns: CellType[];
+    values: object[];
     created_at: string;
     update_at: string;
   };
@@ -43,7 +42,7 @@ export interface TableNode extends Node {
 
 export type CellType = {
   id: string;
-  name: string;
+  label: string;
   type: "string" | "number" | "boolean" | "date";
 };
 
