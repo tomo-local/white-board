@@ -20,14 +20,14 @@ export type NodeData<T> = Record<CommonDataKey, string> & T;
 export interface MarkdownNode extends Node {
   type: "markdown";
   data: NodeData<{
-    content: string | null;
+    context: string | null;
   }>;
 }
 
 export interface MemoNode extends Node {
   type: "memo";
   data: NodeData<{
-    content: string | null;
+    context: string | null;
   }>;
 }
 
