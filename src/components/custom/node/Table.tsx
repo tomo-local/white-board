@@ -135,12 +135,12 @@ export default function MarkdownNode(props: NodeProps<TableNode>) {
               <tr className="divide-x divide-neutral-500 dark:divide-neutral-700">
                 <th className="min-w-8 p-1 hover:bg-neutral-500" />
                 <th className="p-1 min-w-20 hover:bg-neutral-500" />
-                {node.data.rowColumns.map((header) => (
+                {node.data.columns.map((header) => (
                   <th
                     key={header.id}
                     className="text-start p-1 w-20 min-x-10 hover:bg-neutral-500"
                   >
-                    {header.name}
+                    {header.label}
                   </th>
                 ))}
                 <th className="flex h-full w-20 p-0">
@@ -166,7 +166,7 @@ export default function MarkdownNode(props: NodeProps<TableNode>) {
               </tr>
             </thead>
             <tbody className="divide-y divide-neutral-500 dark:divide-neutral-700">
-              {node.data.table.map((row, i) => (
+              {node.data.values.map((row, i) => (
                 <tr
                   key={`row_${Math.random()}`}
                   className="relative divide-x divide-neutral-500 dark:divide-neutral-700"
@@ -174,6 +174,7 @@ export default function MarkdownNode(props: NodeProps<TableNode>) {
                   <td className="p-1 items-center">
                     <Handle
                       type="target"
+                      visible={Boolean(props.selected)}
                       className={clsx(
                         !props.selected && "opacity-0",
                         "ring-1 ring-neutral-500 dark:ring-neutral-200"
@@ -184,6 +185,7 @@ export default function MarkdownNode(props: NodeProps<TableNode>) {
 
                     <Handle
                       type="source"
+                      visible={Boolean(props.selected)}
                       className={clsx(
                         !props.selected && "opacity-0",
                         "ring-1 ring-neutral-500 dark:ring-neutral-200"
@@ -191,9 +193,6 @@ export default function MarkdownNode(props: NodeProps<TableNode>) {
                       id={`source_row_${i}`}
                       position={Position.Right}
                     />
-                  </td>
-                  <td className="p-1 items-center">
-                    {node.data.lineColumns[i].name}
                   </td>
                   {Object.values(row).map((cell) => (
                     <td
@@ -214,7 +213,7 @@ export default function MarkdownNode(props: NodeProps<TableNode>) {
               ))}
 
               <tr>
-                <td colSpan={node.data.rowColumns.length + 2} className="p-0 ">
+                <td colSpan={node.data.columns.length + 2} className="p-0 ">
                   <Button
                     disabled={!editable}
                     type="button"
