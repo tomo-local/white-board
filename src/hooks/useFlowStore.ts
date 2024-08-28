@@ -16,7 +16,7 @@ import { useAtomCallback } from "jotai/utils";
 
 import { nodesAtom, edgesAtom } from "@/jotai/flow/page";
 import { createNode } from "@/utils/flow";
-import type { CustomNodes as Node, CustomNodeTypes } from "@/types/flow";
+import type { CustomNodes as Node, CustomNodeType } from "@/types/flow";
 import { calNodeCenterPosition } from "@/utils/flow";
 
 export const useFlowStore = () => {
@@ -65,7 +65,7 @@ export const useFlowStore = () => {
     ),
     addNode: useAtomCallback(
       useCallback(
-        (get, set, type: CustomNodeTypes, position: XYPosition) => {
+        (get, set, type: CustomNodeType, position: XYPosition) => {
           const nodes = get(nodesAtom(id));
 
           const newNode = createNode({

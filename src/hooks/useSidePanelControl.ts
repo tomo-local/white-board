@@ -3,14 +3,14 @@ import { useAtom } from "jotai";
 import { useReactFlow } from "@xyflow/react";
 
 import { sidePanelAtom } from "@/jotai/flow/panel";
-import type { CustomNodeTypes } from "@/types/flow";
+import type { CustomNodeType } from "@/types/flow";
 
 type Position = {
   x: number;
   y: number;
 };
 
-type AddNodeFunction = (type: CustomNodeTypes, position: Position) => void;
+type AddNodeFunction = (type: CustomNodeType, position: Position) => void;
 
 const callPosition = ({ x, y }: Position) => {
   const plusX = -100;
@@ -22,7 +22,7 @@ export const useSidePanelControl = (addNode?: AddNodeFunction) => {
   const [panel, setPanel] = useAtom(sidePanelAtom);
   const { screenToFlowPosition } = useReactFlow();
 
-  const select = (selected: CustomNodeTypes) => setPanel({ selected });
+  const select = (selected: CustomNodeType) => setPanel({ selected });
   const reset = () => setPanel({ selected: null });
 
   return {

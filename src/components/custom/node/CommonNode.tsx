@@ -7,10 +7,10 @@ import AddNodeButton from "@/components/custom/node/options/AddNodeButton";
 import PointBadge from "@/components/common/badge/PointBadge";
 
 import { useNodeControl } from "@/hooks/useNodeControl";
-import type { CustomNodes, CustomNodeTypes } from "@/types/flow";
+import type { CustomNodes, CustomNodeType } from "@/types/flow";
 
 type CommonNodeProps = {
-  type: CustomNodeTypes;
+  type: CustomNodeType;
   editing?: boolean;
   className?: string;
   isConnectable?: boolean;

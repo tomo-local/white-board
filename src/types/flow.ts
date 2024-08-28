@@ -1,43 +1,42 @@
 import type { Node, Edge } from "@xyflow/react";
 
+/**
+ * Node Types
+ */
 export type CustomNodes = MarkdownNode | MemoNode | TableNode;
+export type CustomNodeType = CustomNodes["type"];
+export type CustomNode<Type> = Type extends MarkdownNode["type"]
+  ? MarkdownNode
+  : Type extends MemoNode["type"]
+  ? MemoNode
+  : Type extends TableNode["type"]
+  ? TableNode
+  : never;
 
-export type CustomEdges = Edge;
+type CommonDataKey = "label" | "created_at" | "update_at";
 
-export type CustomNodeTypes =
-  | MarkdownNode["type"]
-  | MemoNode["type"]
-  | TableNode["type"];
+export type NodeData<T> = Record<CommonDataKey, string> & T;
 
 export interface MarkdownNode extends Node {
   type: "markdown";
-  data: {
-    label: string;
-    context: string | null;
-    created_at: string;
-    update_at: string;
-  };
+  data: NodeData<{
+    content: string | null;
+  }>;
 }
 
 export interface MemoNode extends Node {
   type: "memo";
-  data: {
-    context: string | null;
-    created_at: string;
-    update_at: string;
-  };
+  data: NodeData<{
+    content: string | null;
+  }>;
 }
 
 export interface TableNode extends Node {
   type: "table";
-  data: {
-    label: string;
-    // MEMO: 将来的には変更予定
+  data: NodeData<{
     columns: CellType[];
-    values: object[];
-    created_at: string;
-    update_at: string;
-  };
+    values: CellValue[][];
+  }>;
 }
 
 export type CellType = {
@@ -50,6 +49,15 @@ export type CellValue = {
   value: string;
 };
 
+/*
+ * Edge Types
+ */
+
+export type CustomEdges = Edge;
+
+/**
+ * Page List
+ */
 export type PageListItem = {
   id: string;
   title: string;

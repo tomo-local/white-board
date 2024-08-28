@@ -2,14 +2,14 @@ import { Position, type XYPosition, type NodeProps } from "@xyflow/react";
 import { ArrowDownOnSquareIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 
-import type { CustomNodeTypes } from "@/types/flow";
+import type { CustomNodeType } from "@/types/flow";
 import { calNextNodePosition } from "@/utils/flow";
 
 type AddNodeButtonProps = {
-  type: CustomNodeTypes;
+  type: CustomNodeType;
   displayPosition: Position;
   onClick: (
-    type: CustomNodeTypes,
+    type: CustomNodeType,
     id: string,
     position: Position,
     positionXY: XYPosition

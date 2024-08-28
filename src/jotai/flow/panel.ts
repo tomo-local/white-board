@@ -1,8 +1,8 @@
 import { atom } from "jotai";
-import type { CustomNodeTypes } from "@/types/flow";
+import type { CustomNodeType } from "@/types/flow";
 
 type SidePanelButton = {
-  selected: CustomNodeTypes | null;
+  selected: CustomNodeType | null;
 };
 
 export const sidePanelAtom = atom<SidePanelButton>({ selected: null });

@@ -201,7 +201,7 @@ export default function MarkdownNode(props: NodeProps<TableNode>) {
                     >
                       <input
                         type="text"
-                        defaultValue={cell}
+                        defaultValue={cell.value}
                         className={
                           "bg-transparent w-full h-full border-none focus:outline-none"
                         }

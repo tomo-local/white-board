@@ -5,14 +5,14 @@ import type {
   MarkdownNode,
   MemoNode,
   TableNode,
-  CustomNodeTypes,
+  CustomNodeType,
 } from "@/types/flow";
 
 import { v4 as uuid } from "uuid";
 
 type InputNode = {
   id?: string;
-  type: CustomNodeTypes;
+  type: CustomNodeType;
   position: XYPosition;
   data?: Record<string, unknown>;
   nodes?: CustomNodes[];
@@ -51,7 +51,7 @@ const Node = ({
   }
 };
 
-const crateLabel = (type: CustomNodeTypes, nodes?: CustomNodes[]) =>
+const crateLabel = (type: CustomNodeType, nodes?: CustomNodes[]) =>
   `カード ${nodes?.filter((node) => node.type === type).length}`;
 
 export const createNode = ({ type, position, data, nodes }: InputNode) => {
