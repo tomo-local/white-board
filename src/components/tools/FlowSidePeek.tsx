@@ -3,7 +3,8 @@ import clsx from "clsx";
 
 import { useNodeDetailsControl } from "@/hooks/useNodeDetailsControl";
 import { Transition } from "@headlessui/react";
-import MarkdownDetails from "@/components/tools/details/MarkdownDetails";
+import MarkdownDetail from "@/components/tools/details/MarkdownDetail";
+import TableDetail from "@/components/tools/details/TableDetail";
 
 export default function FlowSidePeek() {
   const [open, setOpen] = useState(false);
@@ -39,7 +40,10 @@ export default function FlowSidePeek() {
         )}
       >
         {selectNode?.type === "markdown" && (
-          <MarkdownDetails node={selectNode} remove={remove} />
+          <MarkdownDetail node={selectNode} remove={remove} />
+        )}
+        {selectNode?.type === "table" && (
+          <TableDetail node={selectNode} remove={remove} />
         )}
       </div>
     </Transition>
