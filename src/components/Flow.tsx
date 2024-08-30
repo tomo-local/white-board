@@ -1,5 +1,5 @@
 "use client";
-import { ReactFlow, MiniMap, Background } from "@xyflow/react";
+import { ReactFlow, MiniMap, Background, Controls } from "@xyflow/react";
 import type { NodeTypes } from "@xyflow/react";
 
 import { useFlowStore } from "@/hooks/useFlowStore";
@@ -40,7 +40,8 @@ export default function Flow() {
       >
         <Background />
         <SidePanel />
-        <MiniMap pannable zoomable position="bottom-left" />
+        <Controls className="text-neutral-600"/>
+        <MiniMap pannable zoomable position="bottom-left" className="!left-10" />
       </ReactFlow>
     </div>
   );
