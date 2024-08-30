@@ -25,7 +25,7 @@ export const useNodeDetailsControl = () => {
     has: () => !!next,
     go: () => {
       if (next) {
-        select(next.id);
+        set("n", next.id);
       }
     },
   };
@@ -34,7 +34,7 @@ export const useNodeDetailsControl = () => {
     has: () => !!previous,
     go: () => {
       if (previous) {
-        select(previous.id);
+        set("n", previous.id);
       }
     },
   };

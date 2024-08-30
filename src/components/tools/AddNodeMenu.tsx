@@ -9,12 +9,12 @@ import clsx from "clsx";
 
 import MarkdownIcon from "@/components/common/icons/MarkdownIcon";
 import { useFlowStore } from "@/hooks/useFlowStore";
-import type { CustomNodeTypes } from "@/types/flow";
+import type { CustomNodeType } from "@/types/flow";
 
 export default function AddNodeMenu() {
   const { addNode } = useFlowStore();
 
-  const handleAddNode = (type: CustomNodeTypes) => {
+  const handleAddNode = (type: CustomNodeType) => {
     const randomX = Math.floor(Math.random() * 100);
     const randomY = Math.floor(Math.random() * 100);
 

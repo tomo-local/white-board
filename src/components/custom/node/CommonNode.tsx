@@ -7,10 +7,10 @@ import AddNodeButton from "@/components/custom/node/options/AddNodeButton";
 import PointBadge from "@/components/common/badge/PointBadge";
 
 import { useNodeControl } from "@/hooks/useNodeControl";
-import type { CustomNodes, CustomNodeTypes } from "@/types/flow";
+import type { CustomNodes, CustomNodeType } from "@/types/flow";
 
 type CommonNodeProps = {
-  type: CustomNodeTypes;
+  type: CustomNodeType;
   editing?: boolean;
   className?: string;
   isConnectable?: boolean;
@@ -61,10 +61,34 @@ export default function Node(props: CommonNodeProps) {
             "group-hover:opacity-100"
           )}
         >
-          <CustomHandle type="source" position={Position.Top} id="top" />
-          <CustomHandle type="source" position={Position.Right} id="right" />
-          <CustomHandle type="target" position={Position.Left} id="left" />
-          <CustomHandle type="target" position={Position.Bottom} id="bottom" />
+          <CustomHandle
+            id={Position.Top}
+            type="source"
+            position={Position.Top}
+            visible={!selected}
+            className="group-hover:opacity-100"
+          />
+          <CustomHandle
+            id={Position.Right}
+            type="source"
+            position={Position.Right}
+            visible={!selected}
+            className="group-hover:opacity-100"
+          />
+          <CustomHandle
+            id={Position.Left}
+            type="target"
+            position={Position.Left}
+            visible={!selected}
+            className="group-hover:opacity-100"
+          />
+          <CustomHandle
+            id={Position.Bottom}
+            type="target"
+            position={Position.Bottom}
+            visible={!selected}
+            className="group-hover:opacity-100"
+          />
         </div>
       )}
 

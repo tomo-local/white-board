@@ -6,7 +6,7 @@ import { useAtomCallback } from "jotai/utils";
 import { nodesAtom } from "@/jotai/flow/page";
 import { useFlowStore } from "@/hooks/useFlowStore";
 import { updateNodeData, buildConnection } from "@/utils/flow";
-import type { CustomNodes as Node, CustomNodeTypes } from "@/types/flow";
+import type { CustomNodes as Node, CustomNodeType } from "@/types/flow";
 
 export const useNodeControl = () => {
   const { id }: { id: string } = useParams();
@@ -14,7 +14,7 @@ export const useNodeControl = () => {
 
   return {
     addNodeWithEdge: (
-      type: CustomNodeTypes,
+      type: CustomNodeType,
       id: Node["id"] | NodeProps<Node>["id"],
       position: Position,
       positionXY: XYPosition
@@ -50,13 +50,17 @@ export const useNodeControl = () => {
           const nodes = get(nodesAtom(id));
           const index = nodes.findIndex((n) => n.id === node.id);
 
-          if (!index) {
+          console.log("onSave", node, index);
+
+          if (!index && index !== 0) {
             return;
           }
 
           const newNodes = [...nodes];
 
           newNodes[index] = updateNodeData(newNodes[index], node.data);
+
+          console.log("onSave", newNodes);
 
           set(nodesAtom(id), newNodes);
         },
