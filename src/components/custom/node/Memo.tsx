@@ -24,6 +24,7 @@ export default function MarkdownNode(props: NodeProps<MemoNode>) {
   useEffect(() => {
     if (!props.selected) {
       setEditable(false);
+      setResizable(false);
     }
   }, [props.selected]);
 

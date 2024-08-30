@@ -32,7 +32,7 @@ const config: Config = {
             transform: "rotate(0deg) translateY(0)",
           },
           to: {
-            transform: "rotate(5deg) translateY(-10px)",
+            transform: "rotate(3deg) translateY(-5px)",
           },
         },
       },

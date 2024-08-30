@@ -44,8 +44,8 @@ export const useNodeDetailsControl = () => {
     selectNode: selectNode,
     select: (id: string) => {
       if (id === query.nodeId) {
-        remove("n");
         select(null);
+        remove("n");
         return;
       }
       set("n", id);
