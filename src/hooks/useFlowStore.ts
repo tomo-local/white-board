@@ -19,6 +19,8 @@ import { createNode } from "@/utils/flow";
 import type { CustomNodes as Node, CustomNodeType } from "@/types/flow";
 import { calNodeCenterPosition } from "@/utils/flow";
 
+const CONSTANT_WIDTH = 300;
+
 export const useFlowStore = () => {
   const { id }: { id: string } = useParams();
   const nodes = useAtomValue(nodesAtom(id));
@@ -34,7 +36,7 @@ export const useFlowStore = () => {
       measured?.height
     );
 
-    setCenter(x, y, {
+    setCenter(x + CONSTANT_WIDTH, y, {
       duration: 100,
       zoom: getZoom(),
     });
