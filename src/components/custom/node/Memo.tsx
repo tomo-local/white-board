@@ -1,20 +1,19 @@
 "use client";
 import { type ChangeEvent, use, useEffect, useState } from "react";
 import type { NodeProps } from "@xyflow/react";
-import { NodeResizer, useUpdateNodeInternals } from "@xyflow/react";
-import { clsx } from "clsx";
-
-import CommonNode from "@/components/custom/node/CommonNode";
-
-import { useNodeControl } from "@/hooks/useNodeControl";
-import type { MemoNode } from "@/types/flow";
-import { useNodeDetailsControl } from "@/hooks/useNodeDetailsControl";
+import { NodeResizer } from "@xyflow/react";
 import {
   ArrowsPointingOutIcon,
   DocumentIcon,
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
+import { clsx } from "clsx";
+
+import CommonNode from "@/components/custom/node/CommonNode";
 import IconButton from "@/components/common/button/IconButton";
+
+import { useNodeControl } from "@/hooks/useNodeControl";
+import type { MemoNode } from "@/types/flow";
 
 export default function MarkdownNode(props: NodeProps<MemoNode>) {
   const { onSave } = useNodeControl();
@@ -30,7 +29,7 @@ export default function MarkdownNode(props: NodeProps<MemoNode>) {
 
   const handleChangeContext = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setNode({
-      ...node,
+      ...props,
       data: {
         ...node.data,
         context: e.target.value,
@@ -39,10 +38,9 @@ export default function MarkdownNode(props: NodeProps<MemoNode>) {
   };
 
   const handleSaveContext = (value: string) => {
-    // if (value !== node.data.context) {
-    console.log("save context", value);
-    onSave(node);
-    // }
+    if (value !== node.data.context) {
+      onSave(node);
+    }
     setEditable(false);
   };
 

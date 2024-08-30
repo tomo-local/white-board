@@ -1,80 +1,12 @@
-import { useState, useEffect, useCallback } from "react";
+import { useCallback } from "react";
 import { useParams } from "next/navigation";
 
-import {
-  type NodeProps,
-  type XYPosition,
-  type Connection,
-  Position,
-} from "@xyflow/react";
+import type { NodeProps, XYPosition, Position } from "@xyflow/react";
 import { useAtomCallback } from "jotai/utils";
 import { nodesAtom } from "@/jotai/flow/page";
 import { useFlowStore } from "@/hooks/useFlowStore";
+import { updateNodeData, buildConnection } from "@/utils/flow";
 import type { CustomNodes as Node, CustomNodeTypes } from "@/types/flow";
-
-const buildConnection = (
-  type: Position,
-  currentNodeId: string,
-  nextNodeId: string
-): Connection => {
-  switch (type) {
-    case Position.Top:
-      return {
-        source: currentNodeId,
-        sourceHandle: Position.Top,
-        target: nextNodeId,
-        targetHandle: Position.Bottom,
-      };
-    case Position.Right:
-      return {
-        source: currentNodeId,
-        sourceHandle: Position.Right,
-        target: nextNodeId,
-        targetHandle: Position.Left,
-      };
-
-    case Position.Left:
-      return {
-        source: nextNodeId,
-        sourceHandle: Position.Right,
-        target: currentNodeId,
-        targetHandle: Position.Left,
-      };
-    case Position.Bottom:
-      return {
-        source: nextNodeId,
-        sourceHandle: Position.Top,
-        target: currentNodeId,
-        targetHandle: Position.Bottom,
-      };
-  }
-};
-
-export const updateNodeData = (
-  node: Node,
-  data: Record<string, unknown>
-): Node => {
-  switch (node.type) {
-    case "markdown":
-      return {
-        ...node,
-        data: {
-          ...node.data,
-          ...data,
-          update_at: new Date().toISOString(),
-        },
-      };
-    case "memo":
-      return {
-        ...node,
-        data: {
-          ...node.data,
-          ...data,
-          update_at: new Date().toISOString(),
-        },
-      };
-  }
-};
 
 export const useNodeControl = () => {
   const { id }: { id: string } = useParams();

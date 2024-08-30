@@ -35,7 +35,11 @@ export default function FlowSideView() {
         />
       </button>
       <Transition show={open}>
-        <div className={clsx("min-w-64 bg-neutral-100 dark:bg-neutral-800")}>
+        <div
+          className={clsx(
+            "min-w-64 max-w-64 bg-neutral-100 dark:bg-neutral-800"
+          )}
+        >
           <TabGroup
             as={"div"}
             className="flex flex-col h-full"

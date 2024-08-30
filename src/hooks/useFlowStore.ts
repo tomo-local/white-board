@@ -5,6 +5,8 @@ import {
   addEdge,
   applyEdgeChanges,
   applyNodeChanges,
+  useReactFlow,
+  type XYPosition,
   type EdgeChange,
   type NodeChange,
   type Connection,
@@ -13,62 +15,36 @@ import { useAtomValue } from "jotai";
 import { useAtomCallback } from "jotai/utils";
 
 import { nodesAtom, edgesAtom } from "@/jotai/flow/page";
-import { v4 as uuid } from "uuid";
-import type {
-  CustomNodes as Node,
-  MarkdownNode,
-  MemoNode,
-  CustomNodeTypes,
-} from "@/types/flow";
-
-type Position = {
-  x: number;
-  y: number;
-};
-
-type InputNode = {
-  type: CustomNodeTypes;
-  position: Position;
-  data?: Node["data"];
-};
-
-const createNode = ({ type, position, data }: InputNode) => {
-  switch (type) {
-    case "markdown":
-      return {
-        id: uuid(),
-        type,
-        dragHandle: ".custom-drag-handle",
-        position,
-        data: {
-          ...data,
-          label: "カード",
-          context: "# Title",
-        },
-      } as MarkdownNode;
-    case "memo":
-      return {
-        id: uuid(),
-        type,
-        dragHandle: ".custom-drag-handle",
-        position,
-        width: 180,
-        height: 180,
-        data: {
-          ...data,
-          context: null,
-        },
-      } as MemoNode;
-  }
-};
+import { createNode } from "@/utils/flow";
+import type { CustomNodes as Node, CustomNodeTypes } from "@/types/flow";
+import { calNodeCenterPosition } from "@/utils/flow";
 
 export const useFlowStore = () => {
   const { id }: { id: string } = useParams();
+  const nodes = useAtomValue(nodesAtom(id));
+  const edges = useAtomValue(edgesAtom(id));
+  const { setCenter, getZoom } = useReactFlow();
+
+  const moveNodeCenterPosition = (node: Node) => {
+    const { measured, position } = node;
+    const { x, y } = calNodeCenterPosition(
+      position.x,
+      position.y,
+      measured?.width,
+      measured?.height
+    );
+
+    setCenter(x, y, {
+      duration: 100,
+      zoom: getZoom(),
+    });
+  };
 
   return {
     id,
-    nodes: useAtomValue(nodesAtom(id)),
-    edges: useAtomValue(edgesAtom(id)),
+    nodes,
+    edges,
+    moveNodeCenterPosition,
     onNodesChange: useAtomCallback(
       useCallback(
         (get, set, change: NodeChange<Node>[]) => {
@@ -89,18 +65,13 @@ export const useFlowStore = () => {
     ),
     addNode: useAtomCallback(
       useCallback(
-        (
-          get,
-          set,
-          type: CustomNodeTypes,
-          position: Position,
-          optionId?: string
-        ) => {
+        (get, set, type: CustomNodeTypes, position: XYPosition) => {
           const nodes = get(nodesAtom(id));
-          const { x, y } = position;
+
           const newNode = createNode({
             type,
-            position: { x, y },
+            position,
+            nodes,
           });
 
           const newNodes = [...nodes, newNode];
