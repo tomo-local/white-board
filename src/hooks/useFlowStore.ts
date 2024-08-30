@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useParams } from "next/navigation";
 
 import {
@@ -18,6 +18,7 @@ import { nodesAtom, edgesAtom } from "@/jotai/flow/page";
 import { createNode } from "@/utils/flow";
 import type { CustomNodes as Node, CustomNodeType } from "@/types/flow";
 import { calNodeCenterPosition } from "@/utils/flow";
+import { getHelperLines } from "@/utils/helperLins";
 
 const CONSTANT_WIDTH = 300;
 
@@ -42,18 +43,62 @@ export const useFlowStore = () => {
     });
   };
 
+  const [helperLineHorizontal, setHelperLineHorizontal] = useState<
+    number | undefined
+  >(undefined);
+  const [helperLineVertical, setHelperLineVertical] = useState<
+    number | undefined
+  >(undefined);
+
+  const customApplyNodeChanges = useCallback(
+    (changes: NodeChange[], nodes: Node[]): Node[] => {
+      // reset the helper lines (clear existing lines, if any)
+      setHelperLineHorizontal(undefined);
+      setHelperLineVertical(undefined);
+
+      // this will be true if it's a single node being dragged
+      // inside we calculate the helper lines and snap position for the position where the node is being moved to
+      if (
+        changes.length === 1 &&
+        changes[0].type === "position" &&
+        changes[0].dragging &&
+        changes[0].position
+      ) {
+        const helperLines = getHelperLines(changes[0], nodes);
+
+        // if we have a helper line, we snap the node to the helper line position
+        // this is being done by manipulating the node position inside the change object
+        changes[0].position.x =
+          helperLines.snapPosition.x ?? changes[0].position.x;
+        changes[0].position.y =
+          helperLines.snapPosition.y ?? changes[0].position.y;
+
+        // if helper lines are returned, we set them so that they can be displayed
+        setHelperLineHorizontal(helperLines.horizontal);
+        setHelperLineVertical(helperLines.vertical);
+      }
+
+      return applyNodeChanges(changes, nodes) as Node[];
+    },
+    []
+  );
+
   return {
     id,
     nodes,
     edges,
     moveNodeCenterPosition,
+    helper: {
+      horizontal: helperLineHorizontal,
+      vertical: helperLineVertical,
+    },
     onNodesChange: useAtomCallback(
       useCallback(
         (get, set, change: NodeChange<Node>[]) => {
           const nodes = get(nodesAtom(id));
-          set(nodesAtom(id), applyNodeChanges(change, nodes));
+          set(nodesAtom(id), customApplyNodeChanges(change, nodes));
         },
-        [id]
+        [id, customApplyNodeChanges]
       )
     ),
     onEdgesChange: useAtomCallback(
