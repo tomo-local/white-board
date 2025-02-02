@@ -50,8 +50,6 @@ export const useNodeControl = () => {
           const nodes = get(nodesAtom(id));
           const index = nodes.findIndex((n) => n.id === node.id);
 
-          console.log("onSave", node, index);
-
           if (!index && index !== 0) {
             return;
           }
@@ -59,8 +57,6 @@ export const useNodeControl = () => {
           const newNodes = [...nodes];
 
           newNodes[index] = updateNodeData(newNodes[index], node.data);
-
-          console.log("onSave", newNodes);
 
           set(nodesAtom(id), newNodes);
         },
